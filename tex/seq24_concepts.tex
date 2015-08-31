@@ -1,0 +1,175 @@
+%-------------------------------------------------------------------------------
+% seq24_concepts
+%-------------------------------------------------------------------------------
+%
+% \file        seq24_concepts.tex
+% \library     Documents
+% \author      Chris Ahlstrom
+% \date        2015-07-19
+% \update      2015-08-30
+% \version     $Revision$
+% \license     $XPC_GPL_LICENSE$
+%
+%     Provides the concepts.
+%
+%-------------------------------------------------------------------------------
+
+\section{Concepts}
+\label{sec:concepts}
+
+   This section presents some useful concepts and definitions of terms as
+   they are used in \textsl{Seq24}.
+
+\subsection{Concepts / Terms}
+\label{subsec:concepts_terms}
+
+   This section doesn't provide comprehensive coverage of terms.  It
+   covers mainly terms that puzzled the author at first or that are
+   necessary to understand the \textsl{Seq24} program.
+
+\subsubsection{Concepts / Terms / armed}
+\label{subsubsec:concepts_terms_armed}
+
+   \index{armed}
+   An armed sequence is a sequence that will be heard.
+   "Armed" is the opposite of "muted".
+   Performing an \textsl{arm} operation in \textsl{Seq24} means clicking on
+   an "unarmed" sequence in the patterns panel (the main window of
+   \textsl{Seq24}).  An unarmed sequence will not be heard, and it
+   has a white background.  When the sequence is \textsl{armed},
+   it will be heard, and it has a black background.
+
+   A sequence can be armed or unarmed in three ways:
+
+   \begin{itemize}
+      \item Clicking on the sequence/pattern box.
+      \item Pressing the hot-key for that sequence/pattern box.
+      \item Opening up the Song Editor and starting playback; the
+            sequences arm/unarm depending on the layout of the
+            sequences in the piano roll of the Song Editor.
+   \end{itemize}
+
+\subsubsection{Concepts / Terms / buss (bus)}
+\label{subsubsec:concepts_terms_buss}
+
+   \index{bus}
+   \index{buss}
+   A \textsl{buss} (also spelled "bus" these days) is an entity onto which
+   MIDI events can be placed, in order to be heard or to affect the
+   playback.
+
+\subsubsection{Concepts / Terms / group}
+\label{subsubsec:concepts_terms_group}
+
+   \index{group}
+   A \textsl{group} in \textsl{Seq24} is one of up to 32 previously-defined
+   mute/unmute patterns in the active screen set.
+   A group is a set of patterns that can toggle their playing state
+   together.  Every group contains all 32 sequences in the active screen
+   set.  This concept is similar to mute/unmute groups in hardware
+   sequencers.
+
+\subsubsection{Concepts / Terms / loop}
+\label{subsubsec:concepts_terms_loop}
+
+   \index{loop}
+   \textsl{Loop}
+   is a synonym for \textsl{pattern} or \textsl{sequence}, when used
+   in existing \textsl{Seq24} documentation.
+   Each loop is represented by a box in the Patterns window.
+
+\subsubsection{Concepts / Terms / measures ruler}
+\label{subsubsec:concepts_terms_measures_ruler}
+
+   \index{measures ruler}
+   The \textsl{measures ruler} is the bar at the top of the Song Editor
+   arrangement window that shows the numbering of the measures in the song.
+   Left and right markers can be dropped on this ruler to set durations to
+   be played, looped, expanded, or collapsed.
+
+   Note:
+   \index{bar indicator}
+   The original \textsl{Seq24} documentation calls this item the
+   \textsl{bar indicator}.
+
+\subsubsection{Concepts / Terms / MIDI clock}
+\label{subsubsec:concepts_terms_midi_clock}
+
+   \textsl{MIDI clock} is
+   \index{midi clock}
+   a MIDI timing reference signal used to synchronize pieces of equipment
+   together. MIDI clock runs at a rate of 24 ppqn (pulses per quarter note).
+   This means that the actual speed of the MIDI clock varies with the tempo
+   of the clock generator (as contrasted with time code, which runs at a
+   constant rate).
+
+\subsubsection{Concepts / Terms / pattern}
+\label{subsubsec:concepts_terms_pattern}
+
+   A \textsl{Seq24} \textsl{pattern}
+   \index{pattern}
+   (also called a "sequence" or "loop")
+   is a short unit of melody or rhythm in \textsl{Seq24},
+   extending for a small number of measures (in most cases).
+   Each pattern is represented by a box in the Patterns window.
+
+   Each pattern is editable on its own.  All patterns can be layed out in
+   a particular arrangement to generate a more complex song.
+
+   \textsl{pattern} is a synonym for \textsl{loop} or \textsl{sequence}.
+   It is our preferred term.
+
+\subsubsection{Concepts / Terms / performance}
+\label{subsubsec:concepts_terms_performance}
+
+   In the jargon of \textsl{Seq24}, a
+   \index{performance}
+   \textsl{performance} is an organized collection of patterns.
+   This collection of patterns is created using the Song Editor.
+
+\subsubsection{Concepts / Terms / queue mode}
+\label{subsubsec:concepts_terms_queue_mode}
+
+   TODO:  \index{todo!queue definition}
+   We need to figure out what "queue" refers to in the documentation, what
+   do the "temporary queue" and "permanent queue" are, and what the "keep
+   queue" functionality is used for.
+
+\subsubsection{Concepts / Terms / screen set}
+\label{subsubsec:concepts_terms_screen_set}
+
+   The \textsl{screen set}
+   \index{screen set}
+   is a set of patterns that fit within the 8x4 grid of loops/pattern in the
+   Patterns panel.
+   \textsl{Seq24} supports multiple screens sets, and a name can be given to
+   each for clarity.
+
+\subsubsection{Concepts / Terms / sequence}
+\label{subsubsec:concepts_terms_sequence}
+
+   \index{sequence}
+   \textsl{Sequence} seems to be
+   another synonym for \textsl{pattern}, used in some of the \textsl{Seq24}
+   documentation.  \textsl{Loop} is another synonym.
+   Each sequence is represented by a box in the Patterns window.
+
+\subsubsection{Concepts / Terms / snapshot}
+\label{subsubsec:concepts_terms_snapshot}
+
+   \index{snapshot}
+   A \textsl{Seq24} \textsl{snapshot} is simply a briefly preserved state.
+   One can press a snapshot key, change the state of the patterns for live
+   playback, and then release the snapshot key to revert to the state when
+   it was first pressed.  (Might call it a "revert" key, instead.)
+
+\subsubsection{Concepts / Terms / song}
+\label{subsubsec:concepts_terms_song}
+
+   \index{song}
+   A \textsl{song} is a collection of patterns in a specific layout, as
+   assembled via the Song Editor window.
+
+%-------------------------------------------------------------------------------
+% vim: ts=3 sw=3 et ft=tex
+%-------------------------------------------------------------------------------
