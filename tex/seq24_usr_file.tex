@@ -6,7 +6,7 @@
 % \library     Documents
 % \author      Chris Ahlstrom
 % \date        2015-08-31
-% \update      2015-08-31
+% \update      2015-09-01
 % \version     $Revision$
 % \license     $XPC_GPL_LICENSE$
 %
@@ -14,7 +14,7 @@
 %
 %-------------------------------------------------------------------------------
 
-\section{Sequencer24usr Configuration File}
+\section{Sequencer24 User Configuration File}
 \label{sec:seq24_usr_file}
 
    \index{.seq24usr}
@@ -24,7 +24,11 @@
    directory.
    It allows you to give an alias to 
    each MIDI bus, MIDI channel, and MIDI control 
-   codes, per channel.  The process is to:
+   codes, per channel.
+   The name is a bit misleading... do not confuse this file with the
+   \texttt{.seq24rc} file.
+
+   The process for setting up the user file is to:
 
    \begin{enumber}
       \item Define one or more MIDI busses, the name of each, and what
@@ -37,7 +41,7 @@
          ranges from 0 on up.
    \end{enumber}
 
-\subsection{Sequencer24usr / MIDI Bus Definitions}
+\subsection{Sequencer24 User / MIDI Bus Definitions}
 \label{subsec:seq24_usr_file_midi_bus_definitions}
 
    \index{[user-midi-bus-definitions]}
@@ -89,7 +93,7 @@
       # The rest default to -1 - General MIDI
    \end{verbatim}
 
-\subsection{Sequencer24usr / MIDI Instrument Definitions}
+\subsection{Sequencer24 User / MIDI Instrument Definitions}
 \label{subsec:seq24_usr_file_midi_instrument_definitions}
 
    \index{[user-instrument-definitions]}
@@ -189,7 +193,7 @@
    of some other kinds of instruments, such as drum machines.
 
    Sometime we would like to create a section that sets up the
-   \textsl{Yoshimi} 1.3.9+ software synthesizer as an instrument.
+   \textsl{Yoshimi} 1.3.5+ software synthesizer as an instrument.
 
 %-------------------------------------------------------------------------------
 % vim: ts=3 sw=3 et ft=tex

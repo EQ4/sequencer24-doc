@@ -51,10 +51,73 @@
    This document describes how to use \textsl{Sequencer24} \cite{seq24},
    through version 0.9.3, dated approximately to September, 2015.
 
+\subsection{Sequencer24: What?}
+\label{subsec:what_is_seqeuncer24}
+
    \textsl{Sequencer24} is an continuation of \textsl{Seq24},
    a live-looping sequencer with an interface more like a hardware sequencer
-   than the typical software MIDI sequencer.  Without \textsl{Seq24} and its
-   authors, \textsl{Sequencer24} would never have come into being.
+   than the typical software MIDI sequencer.
+
+   \textsl{Sequencer24} is not a synthesizer.  One needs hardware
+   synthesizer, or a software synthesizer such as Timidity \cite{timidity},
+   FluidSynth \cite{fluidsynth}, ZynAddSubYX \cite{zynaddsubfx} and Yoshimi
+   \cite{yoshimi} \cite{yoshimi2}, AmSynth \cite{amsynth}, Bristol
+   \cite{bristol}, and many others (see \cite{linuxsynths} for a fairly
+   comprehensive list of "Linux" synthesizers).
+
+   \textsl{Sequencer24}, like \textsl{Seq24},
+   is meant to work a bit like an Alesis SR16 drum machine,
+   which, for some, is a very intuitive and fast way to do MIDI.
+   If one has worked with trackers like \textsl{SoundTracker} and
+   \textsl{ShakeTracker}, then "you are a tracker guy and it gonna go fast".
+   With \textsl{Sequencer24}, one creates several patterns, and then
+   combines them.
+
+   There are a number of current authors of \textsl{Sequencer24} today,
+   as one can see in \figureref{fig:seq24_menu_help_credits},
+   and in \figureref{fig:seq24_menu_help_doc}.
+   The original author is Rob C. Buse; where the word "I" occurs, that is
+   probably him.
+
+   Now, unfortunately, \textsl{Seq24} is not currently under active
+   development (2010 seems to be the last update).  There are a number of
+   half-hearted forks for it on \textsl{GitHub}, and some conversions
+   to Java-based and browser-based code, and some patches.
+   So, why would we bother creating another fork of \textsl{Seq24}?
+
+\subsection{Sequencer24: Why?}
+\label{subsec:introduction_seq24_vs_others}
+
+   Although a good program at present, \textsl{Seq24} could use a few more
+   features, such as "infinite patterns" (i.e. tracks), better annunciation
+   of mouse modes, ways to work around the need for two mouse buttons, a more
+   up-to-date GUI, a few bug fixes, fix the formatting of the output "rc"
+   files, and a way to edit parts of the MIDI file textually.
+
+   \begin{quotation}
+      \textsl{Seq24} is a real-time MIDI sequencer. It was created to
+      provide a very simple interface for editing and playing MIDI 'loops'.
+      After searching for a software based sequencer that would provide the
+      functionality needed for a live performance, there was little found in
+      the software realm. I set out to create a very minimal sequencer that
+      excludes the bloated features of the large software sequencers, and
+      includes a small subset of features that I have found usable in
+      performing. 
+
+      Written by Rob C. Buse.  I wrote this program to fill a
+      hole.  I figure it would be a waste if I was the only one
+      using it.  So, I released it under the GPL.
+   \end{quotation}
+
+   This project deserves to stay alive!
+   Taking advantage of Rob's generosity, we've created a continuation,
+   a minor fork, a refactoring, a fixing, an improvement (we hope) of
+   \textsl{Seq24} in this project.  It preserves the lean nature of
+   \textsl{Seq24}, and might even make it a bit leaner, while adding a few
+   features we've found useful.
+   
+   Without \textsl{Seq24} and its authors, \textsl{Sequencer24} would never
+   have come into being.
 
 \subsection{Improvements}
 \label{subsec:improvements}
@@ -104,66 +167,6 @@
    In the future, version 1.0 will be even more object-oriented, hopefully
    even faster, and easier to modify.
 
-\subsection{Sequencer24: What?}
-\label{subsec:what_is_seqeuncer24}
-
-   \textsl{Sequencer24} is not a synthesizer.  One needs hardware
-   synthesizer, or a software synthesizer such as Timidity \cite{timidity},
-   FluidSynth \cite{fluidsynth}, ZynAddSubYX \cite{zynaddsubfx} and Yoshimi
-   \cite{yoshimi} \cite{yoshimi2}, AmSynth \cite{amsynth}, Bristol
-   \cite{bristol}, and many others (see \cite{linuxsynths} for a fairly
-   comprehensive list of "Linux" synthesizers).
-
-   \textsl{Sequencer24}, like \textsl{Seq24},
-   is meant to work a bit like an Alesis SR16 drum machine,
-   which, for some, is a very intuitive and fast way to do MIDI.
-   If one has worked with trackers like \textsl{SoundTracker} and
-   \textsl{ShakeTracker}, then "you are a tracker guy and it gonna go fast".
-   With \textsl{Sequencer24}, one creates several patterns, and then
-   combines them.
-
-   There are a number of current authors of \textsl{Sequencer24} today,
-   as one can see in \figureref{fig:seq24_menu_help_credits},
-   and in \figureref{fig:seq24_menu_help_doc}.
-   The original author is Rob C. Buse; where the word "I" occurs, that is
-   probably him.
-
-   Now, unfortunately, \textsl{Seq24} is not currently under active
-   development (2010 seems to be the last update).  There are a number of
-   half-hearted forks for it on \textsl{GitHub}, and some conversions
-   to Java-based and browser-based code, and some patches.
-
-   So, why would we bother with \textsl{Sequencer24}?
-   Although a good program at present, \textsl{Seq24} could use a few more
-   features, such as "infinite patterns" (i.e. tracks), better annunciation
-   of mouse modes, ways to work around the need for two mouse buttons, a more
-   up-to-date GUI, a few bug fixes, fix the formating of the output rc files,
-   and a way to edit parts of the MIDI file textually.
-
-\subsection{Sequencer24: Why?}
-\label{subsec:introduction_seq24_vs_others}
-
-   \begin{quotation}
-      \textsl{Seq24} is a real-time MIDI sequencer. It was created to
-      provide a very simple interface for editing and playing MIDI 'loops'.
-      After searching for a software based sequencer that would provide the
-      functionality needed for a live performance, there was little found in
-      the software realm. I set out to create a very minimal sequencer that
-      excludes the bloated features of the large software sequencers, and
-      includes a small subset of features that I have found usable in
-      performing. 
-
-      Written by Rob C. Buse.  I wrote this program to fill a
-      hole.  I figure it would be a waste if I was the only one
-      using it.  So, I released it under the GPL.
-   \end{quotation}
-
-   Taking advantage of Rob's high morality, we've created a continuation,
-   a minor fork, a refactoring, a fixing, an improvement (we hope) of
-   \textsl{Seq24} in this project.  It preserves the lean nature of
-   \textsl{Seq24}, and might even make it a bit leaner, while adding a few
-   features we've found useful.
-
 \subsection{Document Structure}
 \label{subsec:introduction_document_structure}
 
@@ -195,6 +198,9 @@
    are also present, in the same vein.
    Each to-do occurs in a sentence beginning with "\textbf{TODO:}".
    This document currently has a lot of them!
+
+   New features (post version 0.9.2) will be noted with the tag
+   "\textbf{New:}".
 
 \subsection{Let's Get Started!}
 \label{subsec:introduction_lets_get_started}

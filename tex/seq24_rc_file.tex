@@ -6,7 +6,7 @@
 % \library     Documents
 % \author      Chris Ahlstrom
 % \date        2015-08-31
-% \update      2015-08-31
+% \update      2015-09-01
 % \version     $Revision$
 % \license     $XPC_GPL_LICENSE$
 %
@@ -14,14 +14,17 @@
 %
 %-------------------------------------------------------------------------------
 
-\section{Sequencer24rc Configuration File}
+\section{Sequencer24 Configuration File}
 \label{sec:seq24_rc_file}
 
    \index{.seq24rc}
    \index{[.seq24rc]}   % for convenience
-   The \textsl{Sequencer24} configuration file is called
-   \texttt{.seq24rc}, and it is stored in the user's \texttt{\$HOME}
-   directory.
+   The \textsl{Sequencer24} configuration file is called \texttt{.seq24rc},
+   and it is stored in the user's \texttt{\$HOME} directory.
+
+   This is the same name used by \textsl{Seq24}, so we
+   will eventually provide an alternate name by default, with a fall-back to
+   the original name.
 
    After you run \textsl{Sequencer24} for the first time, it will generate a
    \texttt{.seq24rc} file in your home directory.
@@ -32,7 +35,7 @@
    should therefore quit \textsl{Sequencer24} before doing modifications to the
    \texttt{.seq24rc} file.
 
-\subsection{Sequencer24rc / MIDI Control Section}
+\subsection{Sequencer24 / MIDI Control Section}
 \label{subsec:seq24_rc_file_midi_control}
 
    \index{[midi-control]}
@@ -154,7 +157,7 @@
 
 	The last three fields describe the range of data that will match.
 
-\subsubsection{Sequencer24rc / MIDI Control Pattern Group}
+\subsubsection{Sequencer24 / MIDI Control Pattern Group}
 \label{subsubsec:seq24_rc_file_midi_control_pattern_group}
 
    Complex?  Here is an example for the some of the first 32 lines, which
@@ -207,7 +210,7 @@
    turned, so to speak), patterns 0 through 7 come on one at a time until
    all are running.
 
-\subsubsection{Sequencer24rc / MIDI Control Mute In Group}
+\subsubsection{Sequencer24 / MIDI Control Mute In Group}
 \label{subsubsec:seq24_rc_file_midi_control_mute_in_group}
 
    \index{mute-in group}
@@ -223,7 +226,7 @@
    So, this part of the MIDI Control section is used for muting and unmuting
    (and toggling) a group of patterns.
 
-\subsubsection{Sequencer24rc MIDI Control Automation Group}
+\subsubsection{Sequencer24 MIDI Control Automation Group}
 \label{subsubsec:seq24_rc_file_midi_control_automation_group}
 
    \index{automation group}
@@ -279,7 +282,7 @@
    \index{todo!explain queue}
    Explain the concept of screen set play.
 
-\subsection{Sequencer24rc / Mute-Group Section}
+\subsection{Sequencer24 / Mute-Group Section}
 \label{subsec:seq24_rc_file_mute_group}
      
    This section is delimited by the \texttt{[mute-group]} construct.
@@ -304,7 +307,7 @@
    set \textsl{Sequencer24} to handle MIDI events and change some more settings
    in \texttt{.seq24rc}.
 
-\subsection{Sequencer24rc / MIDI-Clock Section}
+\subsection{Sequencer24 / MIDI-Clock Section}
 \label{subsec:seq24_rc_file_midi_clock}
 
    \index{[midi-clock]}
@@ -340,7 +343,7 @@
       15 0  # [16] seq24 16
    \end{verbatim}
 
-\subsection{Sequencer24rc / Keyboard Control Section}
+\subsection{Sequencer24 / Keyboard Control Section}
 \label{subsec:seq24_rc_file_keyboard_control}
         
    \index{[keyboard control]}
@@ -387,7 +390,7 @@
       122  3        # z
    \end{verbatim}
 
-\subsection{Sequencer24rc / Keyboard Group Section}
+\subsection{Sequencer24 / Keyboard Group Section}
 \label{subsec:seq24_rc_file_keyboard_group}
 
    \index{[keyboard-group]}
@@ -469,7 +472,7 @@
       65307         # Escape stop sequencer
    \end{verbatim}
 
-\subsection{Sequencer24rc / JACK Transport}
+\subsection{Sequencer24 / JACK Transport}
 \label{subsec:seq24_rc_file_jack_transport}
 
    \index{[jack-transport]}
@@ -507,7 +510,7 @@
       1
    \end{verbatim}
 
-\subsection{Sequencer24rc / Other Sections}
+\subsection{Sequencer24 / Other Sections}
 \label{subsec:seq24_rc_file_other_midi}
 
    \index{[midi-clock-mod-ticks]}
@@ -561,10 +564,25 @@
 
       [interaction-method]
       0
+
+      # Set to 1 to allow seq24 to stay in note-adding mode when
+      # the right-click is released while holding the Mod4 (Super or
+      # Windows) key.
+
+      0
    \end{verbatim}
 
-   We're not sure what directory the following item refers to.
-   It is empty in our "rc" file.
+   \textbf{New:}
+   \index{new!Mod4 edit-lock}
+   There is now an option to use the Mod4 (Super, or Windows) key in the
+   Pattern Editor to lock the editing of a note.  When this mode is enabled,
+   and Mod4 is pressed while the mouse right-button is released, the
+   editing pencil icon remains, and notes can be added.  This feature is
+   useful for crippled trackpads and trackpad drivers that cannot provide
+   two simultaneous button presses.
+s
+   The following item refers to the last directory in which one opened or
+   saved a MIDI file.
 
    \index{[last-used-dir]}
    \begin{verbatim}
@@ -572,10 +590,6 @@
 
       # Last used directory.
    \end{verbatim}
-
-
-\iffalse
-\fi
 
 %-------------------------------------------------------------------------------
 % vim: ts=3 sw=3 et ft=tex

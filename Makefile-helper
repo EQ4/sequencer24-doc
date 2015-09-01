@@ -11,6 +11,7 @@ if [ "$1" == "" ] ; then
    popd
    if [ "$MKERROR" == "no" ] ; then
       cp tex/*.pdf pdf
+		rm tex/*.pdf
    fi
 elif [ "$1" == "clean" ] ; then
    pushd tex
