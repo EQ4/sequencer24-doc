@@ -6,7 +6,7 @@
 % \library     Documents
 % \author      Chris Ahlstrom
 % \date        2015-08-31
-% \update      2015-08-31
+% \update      2015-09-01
 % \version     $Revision$
 % \license     $XPC_GPL_LICENSE$
 %
@@ -49,7 +49,7 @@
 \label{sec:introduction}
 
    This document describes how to use \textsl{Sequencer24} \cite{seq24},
-   through version 0.9.3, dated approximately to 2015.
+   through version 0.9.3, dated approximately to September, 2015.
 
    \textsl{Sequencer24} is an continuation of \textsl{Seq24},
    a live-looping sequencer with an interface more like a hardware sequencer
@@ -63,7 +63,7 @@
    create \textsl{Sequencer24}:
 
    \begin{itemize}
-      \item The code was reformmated using \textsl{astyle} and some of my
+      \item The code was reformmated using \textsl{astyle} and some of our
          own personal preferences.  Modules were split into smaller units.
          Header file "includes" were moved into the "cpp" files to reduce
          header-file dependencies and build times, and to facilitate
@@ -88,21 +88,23 @@
             C whole tone scales) were added.
          \item The application now, by default, writes its MIDI files out
             in a completely MIDI-compliant format which should be readable
-            by other MIDI software.  An option allows \textsl{Sequencer24}
-            to write its MIDI files in the old format.
+            by other MIDI software.  A "legacy" option allows
+            \textsl{Sequencer24} to write its MIDI files in the
+            \textsl{Seq24} format.
          \item The size of the Patterns Panel (main windows) is now locked,
             since enlarging it offers no benefits.
-         \item Support for LASH is now also a run-time option.
+         \item Support for LASH is now a run-time option (as well as a build
+            option).
          \item Support for using the Mod4 (Windows) key to lock the
             right-click note-editing mode in the Pattern Editor has been
-            added.
+            added, to support suboptimal laptop trackpads.
       \end{itemize}
    \end{itemize}
 
    In the future, version 1.0 will be even more object-oriented, hopefully
    even faster, and easier to modify.
 
-\subsection{What is Sequencer24?}
+\subsection{Sequencer24: What?}
 \label{subsec:what_is_seqeuncer24}
 
    \textsl{Sequencer24} is not a synthesizer.  One needs hardware
@@ -120,7 +122,7 @@
    With \textsl{Sequencer24}, one creates several patterns, and then
    combines them.
 
-   There are a number of current authors of \texttt{Sequencer24} today,
+   There are a number of current authors of \textsl{Sequencer24} today,
    as one can see in \figureref{fig:seq24_menu_help_credits},
    and in \figureref{fig:seq24_menu_help_doc}.
    The original author is Rob C. Buse; where the word "I" occurs, that is
@@ -128,22 +130,21 @@
 
    Now, unfortunately, \textsl{Seq24} is not currently under active
    development (2010 seems to be the last update).  There are a number of
-   half-hearted forks for it on \textsl{GitHub}, including some conversions
+   half-hearted forks for it on \textsl{GitHub}, and some conversions
    to Java-based and browser-based code, and some patches.
-   \textsl{Seq24} could use a few more features, such as "infinite
-   patterns" (i.e. tracks), better annunciation of mouse modes,
-   ways to work around the need for two mice, a more up-to-date GUI,
-   a few bug fixes, fix the formating of out rc files,
+
+   So, why would we bother with \textsl{Sequencer24}?
+   Although a good program at present, \textsl{Seq24} could use a few more
+   features, such as "infinite patterns" (i.e. tracks), better annunciation
+   of mouse modes, ways to work around the need for two mouse buttons, a more
+   up-to-date GUI, a few bug fixes, fix the formating of the output rc files,
    and a way to edit parts of the MIDI file textually.
 
-   So, why would we bother with \textsl{Sequencer24}?  The next section answers,
-   in pretty much the original \textsl{Seq24} author's own words.
-
-\subsection{Sequencer24: What and Why?}
+\subsection{Sequencer24: Why?}
 \label{subsec:introduction_seq24_vs_others}
 
    \begin{quotation}
-      \texttt{Sequencer24} is a real-time MIDI sequencer. It was created to
+      \textsl{Seq24} is a real-time MIDI sequencer. It was created to
       provide a very simple interface for editing and playing MIDI 'loops'.
       After searching for a software based sequencer that would provide the
       functionality needed for a live performance, there was little found in
@@ -189,7 +190,7 @@
    main topic "bugs".  These bugs are items that we will try to
    get rid of as time goes on.
 
-   TODO items
+   "To-do" items
    \index{todo!in document}
    are also present, in the same vein.
    Each to-do occurs in a sentence beginning with "\textbf{TODO:}".
@@ -222,16 +223,21 @@
 \end{figure}
 
    Then the \textsl{Sequencer24} main window appears, as shown in
-   \figureref{fig:seq24_main_screen}.
+   \figureref{fig:seq24_main_screen}.  It has a few minor differences
+   from the \textsl{Seq24} main window, including the highlighting of
+   empty patterns in yellow.
 
    \index{tooltips}
    As with most user-interfaces, holding the mouse over any button for a
    short period will let one view a short description (tooltip)
    of what it does.
 
-   The \textsl{Sequencer24} program is basically a loop playing machine with a 
-   simple interface.  Before we describe this interface, it is useful to
-   present some concepts.
+   The \textsl{Sequencer24} program is basically a loop-playing machine with a 
+   fairly simple interface.  Before we describe this interface, it is useful
+   to present some concepts.
+
+% The following "input" sections are stored in separate files of the same
+% name with ".tex" appended.
 
 % Important Concepts
 
