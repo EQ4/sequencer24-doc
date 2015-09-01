@@ -5,8 +5,8 @@
 % \file        seq24_menu.tex
 % \library     Documents
 % \author      Chris Ahlstrom
-% \date        2015-07-19
-% \update      2015-07-22
+% \date        2015-08-31
+% \update      2015-08-31
 % \version     $Revision$
 % \license     $XPC_GPL_LICENSE$
 %
@@ -17,7 +17,7 @@
 \section{Menu}
 \label{sec:seq24_menu}
 
-   The \textsl{Seq24} menu, as seen at the top of
+   The \textsl{Sequencer24} menu, as seen at the top of
    \figureref{fig:seq24_main_screen},
    is fairly simple, but it is important to understand the
    structure of the menu entries.
@@ -30,7 +30,7 @@
    Format 1 standard files that any other sequencer 
    is capable of exporting.  
 
-   The \textsl{Seq24}
+   The \textsl{Sequencer24}
    menu entry contains the sub-items shown in
    \figureref{fig:seq24_menu_file_items}.
    The next few sub-sections discuss the sub-items in the 
@@ -39,7 +39,7 @@
 \begin{figure}[H]
    \centering 
    \includegraphics[scale=0.75]{menu/menu_file.png}
-   \caption{Seq24 File Menu Items}
+   \caption{Sequencer24 File Menu Items}
    \label{fig:seq24_menu_file_items}
 \end{figure}
 
@@ -96,7 +96,7 @@
 
    To save a new file, or to save the current existing file to a new name,
    enter the name in the name field, \textsl{without an extension}.
-   \textsl{Seq24} will append a \texttt{.midi} extension to the filename.
+   \textsl{Sequencer24} will append a \texttt{.midi} extension to the filename.
 
    The file will be save in a format the the Linux \textsl{file} command
    will tag as something like:
@@ -107,7 +107,7 @@
 
    \index{todo!solve seq24 format}
    It looks like a simple MIDI file, and yet, if one re-opens it in
-   \textsl{Seq24}, one sees that all of the labelling, pattern information,
+   \textsl{Sequencer24}, one sees that all of the labelling, pattern information,
    and song layout has been preserved in this file.
    Even the pattern subsections, as discussed in
    \sectionref{subsubsec:seq24_song_editor_arrangement_panel_roll},
@@ -116,7 +116,7 @@
 
    Compare the sizes of the original project MIDI file,
    \texttt{contrib/b4uacuse.mid}, and the output MIDI file after
-   \textsl{Seq24} saved the patterns and the song layout we created,
+   \textsl{Sequencer24} saved the patterns and the song layout we created,
    \texttt{contrib/b4uacuse-seq24.midi}.  The latter is a lot
    bigger.  
 
@@ -165,7 +165,7 @@
 \label{paragraph:seq24_menu_file_options_midi_clock}
 
    The \textbf{MIDI Clock} tab provides a way to send the MIDI clock to one
-   or more of the \textsl{Seq24} output busses.
+   or more of the \textsl{Sequencer24} output busses.
    It is used to configure to what busses the MIDI clock gets dumped.
 
 \begin{figure}[H]
@@ -188,7 +188,7 @@
    \setcounter{ItemCounter}{0}      % Reset the ItemCounter for this list.
 
    \itempar{Buss Name}{midi clock!buss name}
-   These labels indicate the output busses of \textsl{Seq24}.
+   These labels indicate the output busses of \textsl{Sequencer24}.
    They range from \textbf{[1] seq24 1}
    to \textbf{[16] seq24 16}.
 
@@ -212,7 +212,7 @@
    This value starts at 1 and ranges on upward to 16384.
    It  defaults to 64.
    It is used by the \textbf{On (Mod)} setting discussed above.
-   It is the \texttt{[midi-clock-mod-ticks]} option in the \textsl{Seq24}
+   It is the \texttt{[midi-clock-mod-ticks]} option in the \textsl{Sequencer24}
    "rc" file as described in
    \sectionref{subsec:seq24_rc_file_other_midi}.
 
@@ -221,7 +221,7 @@
 \label{paragraph:seq24_menu_file_options_midi_input}
 
    The only item in the \textbf{MIDI Input} tab is the single MIDI input
-   buss provided by \textsl{Seq24}:  \textbf{[0] seq24 0}.
+   buss provided by \textsl{Sequencer24}:  \textbf{[0] seq24 0}.
 
 \begin{figure}[H]
    \centering 
@@ -230,7 +230,7 @@
    \label{fig:seq24_menu_file_options_midi_input}
 \end{figure}
 
-   This item, if checked allows \textsl{Seq24} to be used to record MIDI
+   This item, if checked allows \textsl{Sequencer24} to be used to record MIDI
    information from another source, or pass it through to the output busses
    that are configured
    to allow pass-through
@@ -240,7 +240,7 @@
 \paragraph{Menu / File / Options / Keyboard }
 \label{paragraph:seq24_menu_file_options_keyboard}
 
-   \textsl{Seq24}, as befits a good application, allows extensive use of
+   \textsl{Sequencer24}, as befits a good application, allows extensive use of
    keyboard shortcuts to make operations go faster than when using a mouse.
    The \textbf{Keyboard} tab allows for the configuration of these keyboard
    shortcuts.
@@ -273,7 +273,7 @@
 
    \itempar{Control keys}{keyboard!control keys}
    This block of fields provides shortcut keys for many operations of
-   \textsl{Seq24}.
+   \textsl{Sequencer24}.
 
    \begin{enumber}
       \item \textbf{Start}.
@@ -412,10 +412,10 @@
          Enables synchronization with JACK Transport.
       \item \textbf{Transport Master}.
          \index{JACK!transport master}
-         \textsl{Seq24} will attempt to serve as the JACK Master.
+         \textsl{Sequencer24} will attempt to serve as the JACK Master.
       \item \textbf{Master Conditional}.
          \index{JACK!master conditional}
-         \textsl{Seq24} will fail to serve as the JACK Master if there is
+         \textsl{Sequencer24} will fail to serve as the JACK Master if there is
          already a Master set.
    \end{itemize}
 

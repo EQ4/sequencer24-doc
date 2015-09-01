@@ -5,8 +5,8 @@
 % \file        seq24_pattern_editor.tex
 % \library     Documents
 % \author      Chris Ahlstrom
-% \date        2015-07-19
-% \update      2015-08-30
+% \date        2015-08-31
+% \update      2015-08-31
 % \version     $Revision$
 % \license     $XPC_GPL_LICENSE$
 %
@@ -15,7 +15,7 @@
 \section{Pattern Editor}
 \label{sec:seq24_pattern_editor}
 
-   The \textsl{Seq24 Pattern Editor} is used to edit and preview a pattern,
+   The \textsl{Sequencer24 Pattern Editor} is used to edit and preview a pattern,
    as well as to configure its buss and channel settings.
 
 \begin{figure}[H]
@@ -86,7 +86,7 @@
 
    \itempar{MIDI Out Device}{pattern editor!midi out device}
    This setting specifies one of the 16 MIDI output busses provided by
-   \textsl{Seq24}.  The settings look a lot like
+   \textsl{Sequencer24}.  The settings look a lot like
    \figureref{fig:pattern_window_right_click_midi_bus}.
 
    \itempar{MIDI Out Port}{pattern editor!midi out port}
@@ -265,7 +265,7 @@
 
    One can select which \textbf{Musical Scale} and
    \textbf{Key} the piece is in,
-   and \textsl{Seq24} will grey out those keys on the piano-roll that
+   and \textsl{Sequencer24} will grey out those keys on the piano-roll that
    are \textsl{not} in the key.
    This effect is shown for the C Major scale in the following figure:
 
@@ -322,7 +322,7 @@
    \end{verbatim}
 
    Editing is much easier after making that setting.  (In a future
-   version of \textsl{Seq24}, we will add support for some of the
+   version of \textsl{Sequencer24}, we will add support for some of the
    crappy trackpads we've encountered on various laptops.)
 
 \subsubsection{Pattern Editor / Piano Roll Items}
@@ -383,7 +383,7 @@
 \subsubsection{Pattern Editor / Event Editing}
 \label{subsubsec:seq24_pattern_editor_event_editing}
 
-   Note editing is a bit different with \textsl{Seq24}, since it
+   Note editing is a bit different with \textsl{Sequencer24}, since it
    requires two mouse buttons in many cases.  There are some new
    laptop touchpads from FocalTech that have only one mouse button, and
    use positioning to determine if the click is a left-click or a right-click.
@@ -402,7 +402,7 @@
 
    The Piano Roll pane provides for a quite sophisticated set of note-editing
    actions.  Please study the following paragraphs carefully, ideally while
-   trying them out in \textsl{Seq24}.
+   trying them out in \textsl{Sequencer24}.
 
    \index{pattern editor!right click hold}
    \index{draw mode}
@@ -601,7 +601,7 @@
 
    The bottom horizontal panel of the Pattern Editor provides for
    selecting events for viewing and edition, and the MIDI playback,
-   pass-through, and recording options of \textsl{Seq24}.
+   pass-through, and recording options of \textsl{Sequencer24}.
 
 \begin{figure}[H]
    \centering 
@@ -656,11 +656,11 @@
 
    \itempar{MIDI Data Pass-Through}{pattern editor!midi data pass-through}
    Activating this button will route incoming MIDI data through
-   \textsl{Seq24}, which will then write it to the MIDI output buss.
+   \textsl{Sequencer24}, which will then write it to the MIDI output buss.
 
    \itempar{Record MIDI Data}{pattern editor!record midi data}
    Activating this button will route incoming MIDI data into
-   \textsl{Seq24}, which will then save the data to its buffer, and also
+   \textsl{Sequencer24}, which will then save the data to its buffer, and also
    display the new information (notes) in the piano roll view.
 
    \itempar{Quantized Record}{pattern editor!quantized record}

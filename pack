@@ -1,14 +1,14 @@
 #!/bin/bash
 #
 #******************************************************************************
-# pack (seq24-doc)
+# pack (Sequencer24-doc)
 #------------------------------------------------------------------------------
 ##
 # \file       	pack
-# \library    	seq24-doc
+# \library    	Sequencer24-doc
 # \author     	Chris Ahlstrom
-# \date       	2014-07-12
-# \update     	2014-07-12
+# \date       	2014-08-31
+# \update     	2014-08-31
 # \version    	$Revision$
 # \license    	$XPC_SUITE_GPL_LICENSE$
 #
@@ -45,7 +45,7 @@ fi
 if [ "$1" == "--help" ] || [ "$1" == "help" ] ; then
 
    echo
-   echo "seq24-doc pack 0.1 (2015-07-19)"
+   echo "Sequencer24-doc pack 0.1 (2015-08-31)"
    echo
    echo "Usage:  ./pack [--dry-run] [--no-clean] [tag]"
    echo
@@ -112,7 +112,7 @@ else
 
    if [ "$DODRYRUN" == "yes" ] ; then
       if [ "$DOCLEAN" == "yes" ] ; then
-         echo "seq24-doc will be cleaned by 'make clean'."
+         echo "Sequencer24-doc will be cleaned by 'make clean'."
       fi
       exit 1
    fi
@@ -162,7 +162,7 @@ else
 fi
 
 #******************************************************************************
-# pack (seq24-doc)
+# pack (Sequencer24-doc)
 #------------------------------------------------------------------------------
 # Local Variables:
 # End:

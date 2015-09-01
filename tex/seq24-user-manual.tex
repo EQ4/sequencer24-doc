@@ -5,8 +5,8 @@
 % \file        seq24-user-manual.tex
 % \library     Documents
 % \author      Chris Ahlstrom
-% \date        2015-07-19
-% \update      2015-08-30
+% \date        2015-08-31
+% \update      2015-08-31
 % \version     $Revision$
 % \license     $XPC_GPL_LICENSE$
 %
@@ -29,7 +29,7 @@
 
 \begin{document}
 
-\title{A Seq24 User Manual}
+\title{Sequencer24 User Manual}
 \author{Chris Ahlstrom\\
    (\texttt{ahlstromcj@gmail.com})}
 \date{\today}
@@ -48,124 +48,166 @@
 \section{Introduction}
 \label{sec:introduction}
 
-   This document describes how to use \textsl{Seq24} \cite{seq24},
-   through version 0.9.2, dated approximately to 2010.
+   This document describes how to use \textsl{Sequencer24} \cite{seq24},
+   through version 0.9.3, dated approximately to 2015.
 
-   \textsl{Seq24} is
+   \textsl{Sequencer24} is an continuation of \textsl{Seq24},
    a live-looping sequencer with an interface more like a hardware sequencer
-   than the typical software MIDI sequencer.  The contents of this document
-   are derived in part from existing documents, such as the \texttt{SEQ24}
-   file shipped with the \textsl{Seq24} source code, and a printout from a
-   long-lost wiki.
+   than the typical software MIDI sequencer.  Without \textsl{Seq24} and its
+   authors, \textsl{Sequencer24} would never have come into being.
 
-   \textsl{Seq24} is not a synthesizer.  One needs hardware synthesizer, or
-   a software synthesizer such as
-   Timidity \cite{timidity},
-   FluidSynth \cite{fluidsynth},
-   ZynAddSubYX \cite{zynaddsubfx} and Yoshimi \cite{yoshimi} \cite{yoshimi2},
-   AmSynth \cite{amsynth},
-   Bristol \cite{bristol},
-   and others (see \cite{linuxsynths} for a fairly comprehensive list of
-   "Linux" synthesizers).
+\subsection{Improvements}
+\label{subsec:improvements}
 
-   \textsl{Seq24} is meant to work a bit like an Alesis SR16 drum machine,
+   The following improvements have been made to \textsl{Seq24} to
+   create \textsl{Sequencer24}:
+
+   \begin{itemize}
+      \item The code was reformmated using \textsl{astyle} and some of my
+         own personal preferences.  Modules were split into smaller units.
+         Header file #includes were moved into the "cpp" files to reduce
+         header-file dependencies and build times, and to facilitate
+         understanding of the code.
+      \item Much documentation was added to the code as we tried to figure
+         out how it worked.  Generation of Doxygen output (including a PDF
+         file) was added to provide a developer's reference manual.
+      \item Debian packaging was incorporated into the project to make it
+         easier to install without the source code.  Bootstrapping and
+         packing scripts were added so that other developers can rebuild the
+         project from scratch.
+      \item Various fixes (patches) found by searching the web were manually
+         incorporated into the code.  Fixes to bugs found while refactoring
+         \textsl{Seq24} were also made.  These fixes are noted in detail in
+         the project's ROADMAP file.
+      \item Various minor features were added:
+      \begin{itemize}
+         \item Patterns/sequences/loops that are empty of MIDI events are
+            now highlighted in yellow boxes, and are completely ignored at
+            playback time.
+         \item More musical scales (harmonic minor, melodic minor, and
+            C whole tone scales) were added.
+         \item The application now, by default, writes its MIDI files out
+            in a completely MIDI-compliant format which should be readable
+            by other MIDI software.  An option allows \textsl{Sequencer24}
+            to write its MIDI files in the old format.
+         \item The size of the Patterns Panel (main windows) is now locked,
+            since enlarging it offers no benefits.
+         \item Support for LASH is now also a run-time option.
+         \item Support for using the Mod4 (Windows) key to lock the
+            right-click note-editing mode in the Pattern Editor has been
+            added.
+      \end{itemize}
+   \end{itemize}
+
+   In the future, version 1.0 will be even more object-oriented, hopefully
+   even faster, and easier to modify.
+
+\subsection{What is Sequencer24?}
+\label{subsec:what_is_seqeuncer24}
+
+   \textsl{Sequencer24} is not a synthesizer.  One needs hardware
+   synthesizer, or a software synthesizer such as Timidity \cite{timidity},
+   FluidSynth \cite{fluidsynth}, ZynAddSubYX \cite{zynaddsubfx} and Yoshimi
+   \cite{yoshimi} \cite{yoshimi2}, AmSynth \cite{amsynth}, Bristol
+   \cite{bristol}, and many others (see \cite{linuxsynths} for a fairly
+   comprehensive list of "Linux" synthesizers).
+
+   \textsl{Sequencer24}, like \textsl{Seq24},
+   is meant to work a bit like an Alesis SR16 drum machine,
    which, for some, is a very intuitive and fast way to do MIDI.
    If one has worked with trackers like \textsl{SoundTracker} and
    \textsl{ShakeTracker}, then "you are a tracker guy and it gonna go fast".
-   With \textsl{Seq24}, one creates several patterns, and then combines them.
+   With \textsl{Sequencer24}, one creates several patterns, and then
+   combines them.
 
-   There are a number of current authors of \texttt{Seq24} today,
-   as one can see in
-   \figureref{fig:seq24_menu_help_credits},
-   and it
-   \figureref{fig:seq24_menu_help_doc}.
+   There are a number of current authors of \texttt{Sequencer24} today,
+   as one can see in \figureref{fig:seq24_menu_help_credits},
+   and in \figureref{fig:seq24_menu_help_doc}.
    The original author is Rob C. Buse; where the word "I" occurs, that is
    probably him.
 
    Now, unfortunately, \textsl{Seq24} is not currently under active
    development (2010 seems to be the last update).  There are a number of
    half-hearted forks for it on \textsl{GitHub}, including some conversions
-   to Java-based and browser-based code.  One of the fork consists of some
-   patches for LASH support, which should be incorporated at some point.
+   to Java-based and browser-based code, and some patches.
    \textsl{Seq24} could use a few more features, such as "infinite
    patterns" (i.e. tracks), better annunciation of mouse modes,
    ways to work around the need for two mice, a more up-to-date GUI,
    a few bug fixes, fix the formating of out rc files,
    and a way to edit parts of the MIDI file textually.
 
-   So, why would we bother with \textsl{Seq24}?  The next section answers,
-   in pretty much the original author's words.
+   So, why would we bother with \textsl{Sequencer24}?  The next section answers,
+   in pretty much the original \textsl{Seq24} author's own words.
 
-\subsection{Seq24: What and Why?}
+\subsection{Sequencer24: What and Why?}
 \label{subsec:introduction_seq24_vs_others}
 
-   \texttt{Seq24} is a real-time MIDI sequencer. It was created to 
-   provide a very simple interface for editing and playing 
-   MIDI 'loops'. After searching for a software based 
-   sequencer that would provide the functionality needed for 
-   a live performance, there was little found in the 
-   software realm. I set out to create a very minimal sequencer 
-   that excludes the bloated features of the large software 
-   sequencers, and includes a small subset of features that 
-   I have found usable in performing. 
-
    \begin{quotation}
+      \texttt{Sequencer24} is a real-time MIDI sequencer. It was created to
+      provide a very simple interface for editing and playing MIDI 'loops'.
+      After searching for a software based sequencer that would provide the
+      functionality needed for a live performance, there was little found in
+      the software realm. I set out to create a very minimal sequencer that
+      excludes the bloated features of the large software sequencers, and
+      includes a small subset of features that I have found usable in
+      performing. 
+
       Written by Rob C. Buse.  I wrote this program to fill a
       hole.  I figure it would be a waste if I was the only one
       using it.  So, I released it under the GPL.
    \end{quotation}
 
-   Taking advantage of Rob's migh morality, we've creating a continuation,
-   minor fork, refactoring, fixing, improvements (we hope) of \textsl{Seq24}
-   in a project called "Sequencer24" \cite{sequencer24}.  It preserves the
-   lean nature of \textsl{Seq24}, and might even make it a bit leaner, while
-   adding a few features we've found useful.  Stay tuned for a project that
-   documents "Sequencer24" and its new features.
+   Taking advantage of Rob's high morality, we've created a continuation,
+   a minor fork, a refactoring, a fixing, an improvement (we hope) of
+   \textsl{Seq24} in this project.  It preserves the lean nature of
+   \textsl{Seq24}, and might even make it a bit leaner, while adding a few
+   features we've found useful.
 
 \subsection{Document Structure}
 \label{subsec:introduction_document_structure}
 
    The structure of this document is based on the user-interface of
-   \textsl{Seq24}.
-   The sections are basically provided
-   in the order their contents appear in the user interface of
-   \textsl{Seq24}.  To help the reader jump around this document, multiple
-   links and references are supplied.
+   \textsl{Sequencer24}.  The sections are basically provided in the order
+   their contents appear in the user interface of \textsl{Sequencer24}.  To
+   help the reader jump around this document, multiple links, references,
+   and index entries are provided.
 
    Usage tips
    \index{tips!in document}
    for each of the functions provided in
-   \textsl{Seq24} are sprinkled throughout this document.
-   Each tip occurs in a section beginning with "Tip:".
+   \textsl{Sequencer24} are sprinkled throughout this document.
+   Each tip occurs in a section beginning with "\textbf{Tip:}".
    Each tip is provided with an entry in the Index, under the
    main topic "tips".
 
    Bug notes
    \index{bugs!in document}
-   for some of the oddities found in \textsl{Seq24} are
+   for some of the oddities found in \textsl{Sequencer24} are
    sprinkled throughout this document.
-   Each bug occurs in a sentence beginning with "Bug:".
+   Each bug occurs in a sentence beginning with "\textbf{Bug:}".
    Each bug is provided with an entry in the Index, under the
-   main topic "bugs".
+   main topic "bugs".  These bugs are items that we will try to
+   get rid of as time goes on.
 
    TODO items
    \index{todo!in document}
    are also present, in the same vein.
+   Each to-do occurs in a sentence beginning with "\textbf{TODO:}".
    This document currently has a lot of them!
 
 \subsection{Let's Get Started!}
 \label{subsec:introduction_lets_get_started}
 
-   Let us run \textsl{Seq24}, but run it without using \textsl{JACK}, which
-   complicates the discussion of \textsl{Seq24}.  The first
+   Let us run \textsl{Sequencer24}, but run it without using \textsl{JACK},
+   which complicates the discussion of \textsl{Sequencer24}.  The first
    thing to do is make sure one has no other sound application running
-   (unless one wants to risk blocking \textsl{Seq24} or hearing two sounds
-   simultaneously, depending on one's sound card and ALSA setup).
-   Then start \textsl{Seq24} so that it uses ALSA for
-   MIDI.  Provide a default MIDI file so that all elements of the user
-   interface can come into play.
-   Also use the "\&" character so that we get back to the
+   (unless one wants to risk blocking \textsl{Sequencer24} or hearing two
+    sounds simultaneously, depending on one's sound card and ALSA setup).
+   Then start \textsl{Sequencer24} so that it uses ALSA for MIDI.  Provide a
+   default MIDI file so that all elements of the user interface can come
+   into play.  Also use the "\&" character so that we get back to the
    command-line prompt.
+
 %   See \sectionref{sec:seq24_man_page}.
 
 \begin{verbatim}
@@ -175,15 +217,11 @@
 \begin{figure}[H]
    \centering 
    \includegraphics[scale=0.75]{seq24-first-screen.png}
-   \caption{Seq24 Main Screen}
+   \caption{Sequencer24 Main Screen}
    \label{fig:seq24_main_screen}
 \end{figure}
 
-%  \includegraphics[scale=1.0]{seq24-first-screen.jpg}
-%  That figure a bit out-of-date (it does not show the new "Part of"
-%  feature), so we've replaced it with a new screen capture.
-   
-   Then the \textsl{Seq24} main window appears, as shown in
+   Then the \textsl{Sequencer24} main window appears, as shown in
    \figureref{fig:seq24_main_screen}.
 
    \index{tooltips}
@@ -191,7 +229,7 @@
    short period will let one view a short description (tooltip)
    of what it does.
 
-   The \textsl{Seq24} program is basically a loop playing machine with a 
+   The \textsl{Sequencer24} program is basically a loop playing machine with a 
    simple interface.  Before we describe this interface, it is useful to
    present some concepts.
 
@@ -227,18 +265,18 @@
 
 \input{seq24_manpage}
 
-% Building and debugging Seq24
+% Building and debugging Sequencer24
 
 % \input{yum_build}
 
 \section{Summary}
 \label{sec:summary}
 
-   In summary, we can say that you will find \textsl{Seq24} intriguing.
+   In summary, we can say that you will find \textsl{Sequencer24} intriguing.
 
    There are some topics that this document does not yet treat ...:
 
-   Contact: If you have ideas about \textsl{Seq24} or a bug report, please
+   Contact: If you have ideas about \textsl{Sequencer24} or a bug report, please
    email us (at \url{mailto:seq24@filter24.org}).
    If it's a bug report, please add \textbf{[BUG]} to the Subject.
 

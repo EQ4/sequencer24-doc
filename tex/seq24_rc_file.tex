@@ -5,8 +5,8 @@
 % \file        seq24_rc_file.tex
 % \library     Documents
 % \author      Chris Ahlstrom
-% \date        2015-07-20
-% \update      2015-08-08
+% \date        2015-08-31
+% \update      2015-08-31
 % \version     $Revision$
 % \license     $XPC_GPL_LICENSE$
 %
@@ -14,25 +14,25 @@
 %
 %-------------------------------------------------------------------------------
 
-\section{Seq24rc Configuration File}
+\section{Sequencer24rc Configuration File}
 \label{sec:seq24_rc_file}
 
    \index{.seq24rc}
    \index{[.seq24rc]}   % for convenience
-   The \textsl{Seq24} configuration file is called
+   The \textsl{Sequencer24} configuration file is called
    \texttt{.seq24rc}, and it is stored in the user's \texttt{\$HOME}
    directory.
 
-   After you run \textsl{Seq24} for the first time, it will generate a
+   After you run \textsl{Sequencer24} for the first time, it will generate a
    \texttt{.seq24rc} file in your home directory.
    It contains the the data for remote MIDI control, keyboard
    control, and MIDI clock.
 
-   \textsl{Seq24} will overwrite the \texttt{.seq24rc} file on quit.  One
-   should therefore quit \textsl{Seq24} before doing modifications to the
+   \textsl{Sequencer24} will overwrite the \texttt{.seq24rc} file on quit.  One
+   should therefore quit \textsl{Sequencer24} before doing modifications to the
    \texttt{.seq24rc} file.
 
-\subsection{Seq24rc / MIDI Control Section}
+\subsection{Sequencer24rc / MIDI Control Section}
 \label{subsec:seq24_rc_file_midi_control}
 
    \index{[midi-control]}
@@ -154,7 +154,7 @@
 
 	The last three fields describe the range of data that will match.
 
-\subsubsection{Seq24rc / MIDI Control Pattern Group}
+\subsubsection{Sequencer24rc / MIDI Control Pattern Group}
 \label{subsubsec:seq24_rc_file_midi_control_pattern_group}
 
    Complex?  Here is an example for the some of the first 32 lines, which
@@ -207,7 +207,7 @@
    turned, so to speak), patterns 0 through 7 come on one at a time until
    all are running.
 
-\subsubsection{Seq24rc / MIDI Control Mute In Group}
+\subsubsection{Sequencer24rc / MIDI Control Mute In Group}
 \label{subsubsec:seq24_rc_file_midi_control_mute_in_group}
 
    \index{mute-in group}
@@ -223,7 +223,7 @@
    So, this part of the MIDI Control section is used for muting and unmuting
    (and toggling) a group of patterns.
 
-\subsubsection{Seq24rc MIDI Control Automation Group}
+\subsubsection{Sequencer24rc MIDI Control Automation Group}
 \label{subsubsec:seq24_rc_file_midi_control_automation_group}
 
    \index{automation group}
@@ -279,7 +279,7 @@
    \index{todo!explain queue}
    Explain the concept of screen set play.
 
-\subsection{Seq24rc / Mute-Group Section}
+\subsection{Sequencer24rc / Mute-Group Section}
 \label{subsec:seq24_rc_file_mute_group}
      
    This section is delimited by the \texttt{[mute-group]} construct.
@@ -301,17 +301,17 @@
    group [state of the first 8 sequences] [second 8] [third 8] [fourth 8]
 
    After the list of sequences and their MIDI events, one can 
-   set \textsl{Seq24} to handle MIDI events and change some more settings
+   set \textsl{Sequencer24} to handle MIDI events and change some more settings
    in \texttt{.seq24rc}.
 
-\subsection{Seq24rc / MIDI-Clock Section}
+\subsection{Sequencer24rc / MIDI-Clock Section}
 \label{subsec:seq24_rc_file_midi_clock}
 
    \index{[midi-clock]}
    The MIDI Clock fields will contain the clocking state from the last 
-   time \textsl{Seq24} was run.  Turn off the clock with a 0, or on with a 1.
+   time \textsl{Sequencer24} was run.  Turn off the clock with a 0, or on with a 1.
    This section has 16 entries, one for each MIDI output buss that
-   \textsl{Seq24} supports.
+   \textsl{Sequencer24} supports.
 
    This configuration item is the same as the 
    \textbf{MIDI Clock} tab described in
@@ -340,11 +340,11 @@
       15 0  # [16] seq24 16
    \end{verbatim}
 
-\subsection{Seq24rc / Keyboard Control Section}
+\subsection{Sequencer24rc / Keyboard Control Section}
 \label{subsec:seq24_rc_file_keyboard_control}
         
    \index{[keyboard control]}
-   The keyboard control is a dump of the keys that \textsl{Seq24}
+   The keyboard control is a dump of the keys that \textsl{Sequencer24}
    recognises, and each key's corresponding sequence number.
    Note that the first number corresponds to the number of sequences in
    the active screen set.
@@ -387,7 +387,7 @@
       122  3        # z
    \end{verbatim}
 
-\subsection{Seq24rc / Keyboard Group Section}
+\subsection{Sequencer24rc / Keyboard Group Section}
 \label{subsec:seq24_rc_file_keyboard_group}
 
    \index{[keyboard-group]}
@@ -416,8 +416,8 @@
 	To see the required key codes when pressed, run \texttt{seq24} with
    the \texttt{--show\_keys}.
 
-   Some keys should not be assigned to control sequences in \textsl{Seq24} as
-   they are already assigned in the \textsl{Seq24} menu (with \texttt{Ctrl}). 
+   Some keys should not be assigned to control sequences in \textsl{Sequencer24} as
+   they are already assigned in the \textsl{Sequencer24} menu (with \texttt{Ctrl}). 
 
    This configuration item is the same as the 
    \textbf{Keyboard} tab described in
@@ -469,7 +469,7 @@
       65307         # Escape stop sequencer
    \end{verbatim}
 
-\subsection{Seq24rc / JACK Transport}
+\subsection{Sequencer24rc / JACK Transport}
 \label{subsec:seq24_rc_file_jack_transport}
 
    \index{[jack-transport]}
@@ -487,14 +487,14 @@
    \begin{verbatim}
       [jack-transport]
 
-      # --jack_transport: Enable sync with JACK Transport.  Seq24 will sync
+      # --jack_transport: Enable sync with JACK Transport.  Sequencer24 will sync
       # to JACK transport if the JACK server is available.
       0
 
-      # --jack_master: Seq24 will attempt to serve as JACK Master.
+      # --jack_master: Sequencer24 will attempt to serve as JACK Master.
       0
 
-      # --jack_master_cond: Seq24 will fail to be JACK master if there is
+      # --jack_master_cond: Sequencer24 will fail to be JACK master if there is
       # already a JACK master set.
       0
 
@@ -502,12 +502,12 @@
       # 0 = Playback will be in live mode.  Use this value to allow muting
       #     and unmuting of loops.
       # 1 = Playback will be in performance mode.  Playback will use the song
-      #     editor's data.  When Seq24 is synced to JACK, the playback command
-      #     comes from the JACK server.  Seq24 is in performance mode by default.
+      #     editor's data.  When Sequencer24 is synced to JACK, the playback command
+      #     comes from the JACK server.  Sequencer24 is in performance mode by default.
       1
    \end{verbatim}
 
-\subsection{Seq24rc / Other Sections}
+\subsection{Sequencer24rc / Other Sections}
 \label{subsec:seq24_rc_file_other_midi}
 
    \index{[midi-clock-mod-ticks]}

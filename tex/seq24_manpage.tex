@@ -5,8 +5,8 @@
 % \file        seq24_manpage.tex
 % \library     Documents
 % \author      Chris Ahlstrom
-% \date        2015-07-21
-% \update      2015-07-21
+% \date        2015-08-31
+% \update      2015-08-31
 % \version     $Revision$
 % \license     $XPC_GPL_LICENSE$
 %
@@ -14,24 +14,24 @@
 %
 %-------------------------------------------------------------------------------
 
-\section{Seq24 Man Page}
+\section{Sequencer24 Man Page}
 \label{sec:seq24_man_page}
 
-   This section presents the contents of the \textsl{Seq24} man page, but
+   This section presents the contents of the \textsl{Sequencer24} man page, but
    not exactly in \textsl{man} format.  Also, an item or two are shown that
    somehow didn't make it into the man page, and minor corrections and
    formatting tweaks were made.
 
-   \textsl{Seq24} - Real time MIDI sequencer.
+   \textsl{Sequencer24} - Real time MIDI sequencer.
 
-   \textsl{Seq24} is a real-time MIDI sequencer. It was created to provide a
+   \textsl{Sequencer24} is a real-time MIDI sequencer. It was created to provide a
    very simple interface for editing and playing MIDI 'loops'.
 
    \begin{verbatim}
        seq24 [OPTIONS] [FILENAME]
    \end{verbatim}
 
-   \textsl{Seq24} accepts the following options, plus an optional name of a
+   \textsl{Sequencer24} accepts the following options, plus an optional name of a
    MIDI file.
 
    \setcounter{ItemCounter}{0}      % Reset the ItemCounter for this list.
@@ -49,7 +49,7 @@
       This option does not exist.
 
    \optionpar{-m}{--manual\_alsa\_ports}
-      \textsl{Seq24} won't attach ALSA ports.
+      \textsl{Sequencer24} won't attach ALSA ports.
 
    \optionpar{-s}{--showmidi}
       Dumps incoming MIDI to the screen.
@@ -71,16 +71,16 @@
       0 = seq24 (the default); and 1 = fruity loops method>
 
    \optionpar{-j}{--jack\_transport}
-      \textsl{Seq24} will sync to JACK transport.
+      \textsl{Sequencer24} will sync to JACK transport.
 
    \optionpar{-J}{--jack\_master}
-      \textsl{Seq24} will try to be JACK master
+      \textsl{Sequencer24} will try to be JACK master
 
    \optionpar{-C}{--jack\_master\_cond}
       JACK master will fail if there is already a master
 
    \optionpar{-M}{--jack\_start\_mode [x]}
-      When \textsl{Seq24} is synced to JACK, the following play modes are
+      When \textsl{Sequencer24} is synced to JACK, the following play modes are
       available: 0 = live mode; and 1 = song mode, the default.
 
    \optionpar{-S}{--stats}
@@ -89,22 +89,22 @@
    \optionpar{-U}{--jack\_session\_uuid [uuid]}
       Set the UUID for the JACK session.
 
-   \texttt{\$HOME/.seq24rc} stores the user settings for \textsl{Seq24}.
+   \texttt{\$HOME/.seq24rc} stores the user settings for \textsl{Sequencer24}.
 
    The old project homepage is at
    \url{http://www.filter24.org/seq24/} the new
    one is at \url{https://edge.launchpad.net/seq24/}.
    It is released under the GNU GPL license.
 
-   \textsl{Seq24} was written by Rob C. Buse \url{mailto:seq24@filter24.org}
-   and the \textsl{Seq24} team.
+   \textsl{Sequencer24} was written by Rob C. Buse \url{mailto:seq24@filter24.org}
+   and the \textsl{Sequencer24} team.
 
    This manual page was written by Dana Olson
    \url{mailto:seq24@ubuntustudio.com} with additions from Guido Scholz
    \url{mailto:guido.scholz@bayernline.de}.
 
    \begin{verbatim}
-Version 0.9.2                   November 20 2010                       Seq24(1)
+Version 0.9.2                   November 20 2010                       Sequencer24(1)
    \end{verbatim}
 
 %-------------------------------------------------------------------------------
