@@ -6,7 +6,7 @@
 % \library     Documents
 % \author      Chris Ahlstrom
 % \date        2015-08-31
-% \update      2015-09-01
+% \update      2015-09-02
 % \version     $Revision$
 % \license     $XPC_GPL_LICENSE$
 %
@@ -60,14 +60,16 @@
    allowing one to create news ones from scratch.
    If unsaved changes are pending, the user will be prompted to save the
    changes.
-   Currently, the detection of situations requiring a save (or not requiring
-   a save) needs a bit of work.
+
+   \index{todo!improve change detection}
+   \textsl{Currently, the detection of situations requiring a save (or not
+   requiring a save) needs a bit of work.}
 
 \subsubsection{Menu / File / Open}
 \label{subsubsec:seq24_menu_file_open}
 
    The \textbf{Open} menu entry opens a song that had been saved previously.
-   It opens up a standard GTK+ file dialog.
+   It opens up a standard GTK+ 2 file dialog.
 
 \begin{figure}[H]
    \centering 
@@ -76,18 +78,18 @@
    \label{fig:seq24_menu_file_open}
 \end{figure}
 
-   If unsaved changes are pending, the user will be prompted to save the
-   changes.
+   If unsaved changes are pending, the user will (usually)
+   be prompted to save the changes.
 
 \subsubsection{Menu / File / Save and Save As}
 \label{subsubsec:menu_file_open_save_as}
 
    The \textbf{Save} menu entry saves the song under its current name.
    If there is no current name, then
-   it opens up a standard GTK+ file dialog.
+   it opens up a standard GTK+ 2 file dialog to name and save the file.
 
    The \textbf{Save As} menu entry saves a song under a different name.
-   It opens up the following standard GTK+ file dialog.
+   It opens up the following standard GTK+ 2 file dialog.
 
 \begin{figure}[H]
    \centering 
@@ -120,12 +122,26 @@
    \texttt{contrib/b4uacuse.mid}, and the output MIDI file after
    \textsl{Sequencer24} saved the patterns and the song layout we created,
    \texttt{contrib/b4uacuse-seq24.midi}.  The latter is a lot
-   bigger.  
+   bigger.
+
+   The reason is that, after the last track in the file, a number of
+   sequencer-specific (SeqSpec) items are saved, to preserve this extra
+   information.  In legacy mode, \textsl{Sequencer24} saves this information
+   in the same format as \textsl{Seq24}.  Unfortunately, this format is
+   not quite standard, and some MIDI applications may refuse to parse this
+   section. 
+   
+   \textbf{New:}
+   \index{new!seqspec format}
+   Therefore, in its normal mode, \textsl{Sequencer24} saves this
+   information in a more MIDI-compliant format, marking each SeqSpec section
+   as vendor-specific information, and marking this section as a regular
+   MIDI track.
 
 \subsubsection{Menu / File / Import}
 \label{subsubsec:seq24_menu_file_import}
 
-   The \textbf{Import} menu entry allows one to import a MIDI file
+   The \textbf{Import} menu entry allows one to import a Format 1 MIDI file
    into a pattern.
 
 \begin{figure}[H]
@@ -149,9 +165,18 @@
    \label{fig:seq24_imported_midi_song}
 \end{figure}
 
+   This song has a number of non-event tracks containing labels.
+   \textbf{New:}
+   \index{new!empty tracks}
+   These tracks are treated as "empty", and show up with a yellow
+   background.  They are ignored on playback.   Some of the tracks
+   which look empty, but are not yellow, contain program-change events.
+
    Unfortunately, this song was created before the days of General MIDI.
-   It is scored for the Yamaha PSS-790 consumer-level synthesizer.
-   One can use our MIDI-conversion project (see reference \cite{midicvt}) 
+   It was scored for the Yamaha PSS-790 consumer-level synthesizer,
+   definitely not a GM-compliant device.
+   One can use the MIDI-conversion project, \textsl{midicvt}
+   (see reference \cite{midicvt}),
    to convert it to General MIDI format, including General MIDI drums.
 
 \subsubsection{Menu / File / Options}
