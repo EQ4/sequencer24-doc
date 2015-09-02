@@ -6,7 +6,7 @@
 % \library     Documents
 % \author      Chris Ahlstrom
 % \date        2015-08-31
-% \update      2015-08-31
+% \update      2015-09-02
 % \version     $Revision$
 % \license     $XPC_GPL_LICENSE$
 %
@@ -389,7 +389,14 @@
    immediately, but will kick in when the pattern restarts.
 
    This pending state is indicated by coloring the central box of the
-   pattern grey.  NEED A SCREEN SHOT.
+   pattern grey, as shown in the following figure.
+
+\begin{figure}[H]
+   \centering 
+   \includegraphics[scale=0.75]{pattern/seq24-queueing-coloration.jpg}
+   \caption{Pattern Coloration when Queued}
+   \label{fig:seq24_queueing_coloration}
+\end{figure}
 
    Queue also works for mute/unmute 
 	patterns (groups); in this case every sequence will toggle 
@@ -400,7 +407,9 @@
    this key to something else in the
    \textbf{File / Options / Keyboard / Queue} field.
    The Super key (i.e. the Mod4 or Windows key) is a good candidate to
-   replace the right Ctrl key.
+   replace the right Ctrl key, unless one has (like the author) configured
+   the window manager to use the Super key modifier to manipulate windows
+   and applications \textsl{(laughter ensues)}.
 
    Note that there is also a "Replace" key, which is the left Ctrl key by
    default.  We still need to document this functionality.

@@ -6,7 +6,7 @@
 % \library     Documents
 % \author      Chris Ahlstrom
 % \date        2015-08-31
-% \update      2015-08-31
+% \update      2015-09-02
 % \version     $Revision$
 % \license     $XPC_GPL_LICENSE$
 %
@@ -258,10 +258,32 @@
    \itempar{Key of Sequence}{pattern editor!key}
    Selects the desired key for the pattern.  The following scales are
    supported:  C, C\#, D, D\#, E, F, F\#, G, G\#, A, A\#, and B.
+   Note that changing the \textbf{Key} will also shift the marked notes
+   for the \textbf{Musical Scale} setting.
 
    \itempar{Musical Scale}{pattern editor!scale}
    Selects the desired scale for the pattern.
-   Only the following values are supported: Off, Major, and Minor.
+   Originally, only the following scales were supported: Off, Major, and Minor.
+
+   \textbf{New:}
+   \index{new!scales}
+   With \textsl{Sequencer24 v. 0.9.3}, the following scales are supported:
+
+   \begin{itemize}
+      \item \textbf{Off (chromatic)}
+      \item \textbf{Major}
+      \item \textbf{Minor}
+      \item \textbf{Harmonic Minor}
+      \item \textbf{Melodic Minor}
+      \item \textbf{Whole Tone}
+   \end{itemize}
+
+\begin{figure}[H]
+   \centering 
+   \includegraphics[scale=0.75]{pattern/scales-menu.png}
+   \caption{Available Scales}
+   \label{fig:pattern_editor_available_scales}
+\end{figure}
 
    One can select which \textbf{Musical Scale} and
    \textbf{Key} the piece is in,
@@ -277,7 +299,8 @@
 \end{figure}
 
    This feature makes it a bit easier to stay in key while playing and
-   recording.
+   recording.  Note that the scale will shift when a different
+   \textbf{Key} is selected.
 
    \itempar{Background Sequence}{pattern editor!background sequence}
    One can select another pattern to draw on the background to help with
