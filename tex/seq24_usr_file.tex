@@ -17,16 +17,28 @@
 \section{Sequencer24 User Configuration File}
 \label{sec:seq24_usr_file}
 
-   \index{.seq24usr}
-   \index{[.seq24usr]}   % for convenience
-   The \textsl{Sequencer24} configuration file is called
-   \texttt{.seq24usr}, and it is stored in the user's \texttt{\$HOME}
+   \index{sequencer24usr}
+   \index{[sequencer24usr]}   % for convenience
+   The \textsl{Sequencer24} configuration file was called
+   \texttt{.seq24usr}, and it was stored in the user's \texttt{\$HOME}
    directory.
+   This is the same name used by \textsl{Seq24}, so we created an new file
+   to take its place, with a fall-back to the original file-name if the new
+   file does not exist, or if \textsl{Sequencer24} is running in
+   legacy mode.
+
+   After you run \textsl{Sequencer24} for the first time, it will generate a
+   \texttt{sequencer24usr} file in your home directory:
+
+   \begin{verbatim}
+      /home/ahlstrom/.config/sequencer24/sequencer24usr
+   \end{verbatim}
+
    It allows you to give an alias to 
    each MIDI bus, MIDI channel, and MIDI control 
    codes, per channel.
    The name is a bit misleading... do not confuse this file with the
-   \texttt{.seq24rc} file.
+   \texttt{sequencer24rc} file.
 
    The process for setting up the user file is to:
 
@@ -54,7 +66,7 @@
       3     # number of user buses
    \end{verbatim}
 
-   This means that the \texttt{.seq24usr} file will have three MIDI buss
+   This means that the \texttt{sequencer24usr} file will have three MIDI buss
    sections: [user-midi-bus-0], [user-midi-bus-1], and [user-midi-bus-2].
    Here's is an annoted example of one such section:
 

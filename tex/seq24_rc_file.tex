@@ -17,23 +17,29 @@
 \section{Sequencer24 Configuration File}
 \label{sec:seq24_rc_file}
 
-   \index{.seq24rc}
-   \index{[.seq24rc]}   % for convenience
-   The \textsl{Sequencer24} configuration file is called \texttt{.seq24rc},
-   and it is stored in the user's \texttt{\$HOME} directory.
-
-   This is the same name used by \textsl{Seq24}, so we
-   will eventually provide an alternate name by default, with a fall-back to
-   the original name.
+   \index{sequencer24rc}
+   \index{[sequencer24rc]}   % for convenience
+   The \textsl{Sequencer24} configuration file originally was \texttt{.seq24rc},
+   and it was stored in the user's \texttt{\$HOME} directory.
+   This is the same name used by \textsl{Seq24}, so we created an new file
+   to take its place, with a fall-back to the original file-name if the new
+   file does not exist, or if \textsl{Sequencer24} is running in
+   legacy mode.
 
    After you run \textsl{Sequencer24} for the first time, it will generate a
-   \texttt{.seq24rc} file in your home directory.
+   \texttt{sequencer24rc} file in your home directory:
+
+   \begin{verbatim}
+      /home/ahlstrom/.config/sequencer24/sequencer24rc
+   \end{verbatim}
+
    It contains the the data for remote MIDI control, keyboard
    control, and MIDI clock.
 
-   \textsl{Sequencer24} will overwrite the \texttt{.seq24rc} file on quit.  One
-   should therefore quit \textsl{Sequencer24} before doing modifications to the
-   \texttt{.seq24rc} file.
+   \textsl{Sequencer24} will overwrite the \texttt{sequencer24rc} file upon
+   quitting.  One should therefore quit \textsl{Sequencer24} before doing
+   modifications to the
+   \texttt{sequencer24rc} file.
 
 \subsection{Sequencer24 / MIDI Control Section}
 \label{subsec:seq24_rc_file_midi_control}
@@ -41,7 +47,7 @@
    \index{[midi-control]}
    For each pattern, we can set up MIDI events to turn a 
 	pattern on, off, or to toggle it.  This setup is in the 
-   MIDI Control section of \texttt{.seq24rc}, and begins with an
+   MIDI Control section of \texttt{sequencer24rc}, and begins with an
    "INI" group marker \texttt{[midi-control]}.
 	
    THe MIDI Control section is implicitly broken into subsections, though those
@@ -305,7 +311,7 @@
 
    After the list of sequences and their MIDI events, one can 
    set \textsl{Sequencer24} to handle MIDI events and change some more settings
-   in \texttt{.seq24rc}.
+   in \texttt{sequencer24rc}.
 
 \subsection{Sequencer24 / MIDI-Clock Section}
 \label{subsec:seq24_rc_file_midi_clock}
