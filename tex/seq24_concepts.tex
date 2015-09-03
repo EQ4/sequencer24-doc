@@ -62,12 +62,15 @@
 \label{subsubsec:concepts_terms_group}
 
    \index{group}
-   A \textsl{group} in \textsl{Sequencer24} is one of up to 32 previously-defined
-   mute/unmute patterns in the active screen set.
+   A \textsl{group} in \textsl{Sequencer24} is one of up to 32
+   previously-defined mute/unmute patterns in the active screen set.
    A group is a set of patterns that can toggle their playing state
    together.  Every group contains all 32 sequences in the active screen
    set.  This concept is similar to mute/unmute groups in hardware
    sequencers.
+
+   TODO: \index{todo!mute-group}
+   We need to clarify exactly what can be done with a mute-group.
 
 \subsubsection{Concepts / Terms / loop}
 \label{subsubsec:concepts_terms_loop}
@@ -164,10 +167,11 @@
 \label{subsubsec:concepts_terms_snapshot}
 
    \index{snapshot}
-   A \textsl{Sequencer24} \textsl{snapshot} is simply a briefly preserved state.
-   One can press a snapshot key, change the state of the patterns for live
-   playback, and then release the snapshot key to revert to the state when
-   it was first pressed.  (One might call it a "revert" key, instead.)
+   A \textsl{Sequencer24} \textsl{snapshot} is simply a briefly preserved
+   state of the patterns.  One can press a snapshot key, change the state of
+   the patterns for live playback, and then release the snapshot key to
+   revert to the state when it was first pressed.  (One might call it a
+   "revert" key, instead.)
 
 \subsubsection{Concepts / Terms / song}
 \label{subsubsec:concepts_terms_song}

@@ -6,7 +6,7 @@
 % \library     Documents
 % \author      Chris Ahlstrom
 % \date        2015-08-31
-% \update      2015-09-02
+% \update      2015-09-03
 % \version     $Revision$
 % \license     $XPC_GPL_LICENSE$
 %
@@ -25,16 +25,13 @@
 \subsection{Menu / File}
 \label{subsec:seq24_menu_file}
 
-   The \textbf{File} menu is used to save and load standard 
-   MIDI files.  It should be able to handle any 
-   Format 1 standard files that any other sequencer 
-   is capable of exporting.  
+   The \textbf{File} menu is used to save and load standard MIDI files.  It
+   should be able to handle any Format 1 standard files that any other
+   sequencer is capable of exporting.  
 
-   The \textsl{Sequencer24}
-   menu entry contains the sub-items shown in
-   \figureref{fig:seq24_menu_file_items}.
-   The next few sub-sections discuss the sub-items in the 
-   \textsl{File} sub-menu.
+   The \textsl{Sequencer24} menu entry contains the sub-items shown in
+   \figureref{fig:seq24_menu_file_items}.  The next few sub-sections discuss
+   the sub-items in the \textsl{File} sub-menu.
 
 \begin{figure}[H]
    \centering 
@@ -68,8 +65,8 @@
 \subsubsection{Menu / File / Open}
 \label{subsubsec:seq24_menu_file_open}
 
-   The \textbf{Open} menu entry opens a song that had been saved previously.
-   It opens up a standard GTK+ 2 file dialog.
+   The \textbf{Open} menu entry opens a song (MIDI file)
+   that had been saved previously.  It opens up a standard GTK+2 file dialog.
 
 \begin{figure}[H]
    \centering 
@@ -78,18 +75,18 @@
    \label{fig:seq24_menu_file_open}
 \end{figure}
 
-   If unsaved changes are pending, the user will (usually)
+   If unsaved changes are pending, the user will (usually, unfortunately)
    be prompted to save the changes.
 
 \subsubsection{Menu / File / Save and Save As}
 \label{subsubsec:menu_file_open_save_as}
 
-   The \textbf{Save} menu entry saves the song under its current name.
-   If there is no current name, then
-   it opens up a standard GTK+ 2 file dialog to name and save the file.
+   The \textbf{Save} menu entry saves the song under its current file-name.
+   If there is no current file-name, then it opens up a standard GTK+2 file
+   dialog to name and save the file.
 
    The \textbf{Save As} menu entry saves a song under a different name.
-   It opens up the following standard GTK+ 2 file dialog.
+   It opens up the following standard GTK+2 file dialog.
 
 \begin{figure}[H]
    \centering 
@@ -109,7 +106,6 @@
       myfile.midi: Standard MIDI data (format 1) using 16 tracks at 1/192
    \end{verbatim}
 
-   \index{todo!solve seq24 format}
    It looks like a simple MIDI file, and yet, if one re-opens it in
    \textsl{Sequencer24}, one sees that all of the labelling, pattern information,
    and song layout has been preserved in this file.
@@ -137,12 +133,15 @@
    information in a more MIDI-compliant format, marking each SeqSpec section
    as vendor-specific information, and marking this section as a regular
    MIDI track.
+   \index{todo!explain formats}
+   \textbf{TODO:} Explain the legacy and new formats of the final "track".
 
 \subsubsection{Menu / File / Import}
 \label{subsubsec:seq24_menu_file_import}
 
    The \textbf{Import} menu entry allows one to import a Format 1 MIDI file
-   into a pattern.
+   into one or more patterns, one pattern per track in the MIDI file.
+   Even long tracks, that aren't short loops, are read in properly.
 
 \begin{figure}[H]
    \centering 
@@ -243,7 +242,6 @@
    "rc" file as described in
    \sectionref{subsec:seq24_rc_file_other_midi}.
 
-
 \paragraph{Menu / File / Options / MIDI Input}
 \label{paragraph:seq24_menu_file_options_midi_input}
 
@@ -259,10 +257,15 @@
 
    This item, if checked allows \textsl{Sequencer24} to be used to record MIDI
    information from another source, or pass it through to the output busses
-   that are configured
-   to allow pass-through
+   that are configured to allow pass-through
    (in the Pattern Editor, as discussed in 
    \sectionref{subsec:seq24_pattern_editor_bottom}.)
+
+   What ports are shown here depends on the value of the
+   \texttt{--manual\_alsa\_ports} command-line option or the
+   \texttt{[manual-alsa-ports]} section of the
+   \texttt{sequencer24rc} configuration file, as described in
+   \sectionref{subsec:seq24_rc_file_other_midi}
 
 \paragraph{Menu / File / Options / Keyboard }
 \label{paragraph:seq24_menu_file_options_keyboard}
@@ -280,7 +283,8 @@
 \end{figure}
 
    We won't attempt to cover every user-interface item in this busy
-   dialog, just the categories.
+   dialog, just the categories.  Some items are discussed in other parts of
+   this manual.
 
    \begin{enumber}
       \item \textbf{Show key labels on sequences}
@@ -335,13 +339,23 @@
 
    Also note that the keys definable in this tab are only a subset of the
    various keys that can be used, especially keys used with the
-   \texttt{Ctrl} key.
+   \texttt{Ctrl} key or other modifier keys.
 
-   TODO:  \index{todo!snapshot definition}
-   One thing we need to figure out is just what this "snapshot"
-   feature provides.
-   \index{todo!keep queue}
-   Another thing is the "queue" and "keep queue" features.
+   \index{snapshot}
+   A \textsl{snapshot} is a briefly preserved state of the patterns.
+   One can press a snapshot key, change the state of the patterns for live
+   playback, and then release the snapshot key to revert to the state when
+   the snapshot key was first pressed.
+
+   \index{queue}
+   To "queue" a pattern means to ready it for playback upon the next repeat
+   of a pattern.  A pattern can be armed immediately, or it can be queued to
+   play back the next time the pattern starts.
+
+   \index{keep queue}
+   \index{queue!keep}
+   The "keep queue" functionality allows the queue to be held without
+   holding down a button the whole time.
 
    \itempar{Sequence toggle keys}{keyboard!sequence toggle keys}
    Each of these keys toggles the playing/muting of one of the 32
@@ -358,6 +372,10 @@
    TODO: \index{todo!mute-group}
    One thing we need to discover is just what this mute-grouping
    means functionally.
+
+   Apparently groups work with playing screen set only.
+   Change the screenset and give the command to make it the playing one
+   (e.g. set the HOME key for this purpose.)
 
    \itempar{Learn}{keyboard!learn}
    Learn (while pressing a mute-group key).
@@ -408,6 +426,27 @@
       \item \textbf{Middle-click}.
          Split the note?
    \end{itemize}
+
+   \textbf{New:}
+   \index{new!Mod4 mode}
+   In order to work better with certain trackpads, the
+   "Seq24" mode of mouse interaction can be modified (only in the
+   Pattern Editor at present) so that the Mod4 key (Super or Windows key)
+   can be pressed when releasing the right mouse button.
+   This keeps the mouse in note-add mode.
+
+   The reason for this feature is the crummy FocalTech touchpad on one of
+   the author's laptops.  This trackpad seems to have only a single button,
+   which the driver interprets as left or right depending where the finger
+   is when it is clicked.  There's no way to click the right and left
+   buttons at the same time.  There's no way to make a middle-click action.
+
+   \index{todo:extend mouse support}
+   \textbf{TODO:}
+   This option is currently limited to the pattern editor window, and also
+   needs some more work to see what can be done with the Mod4 key.  But
+   note that some \textsl{Sequencer24} windows can use the ctrl-left-click
+   as a middle click. 
 
 \paragraph{Menu / File / Options / Jack Sync }
 \label{paragraph:seq24_menu_file_options_jack_sync}
