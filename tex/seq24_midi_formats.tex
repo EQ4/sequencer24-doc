@@ -6,7 +6,7 @@
 % \library     Documents
 % \author      Chris Ahlstrom
 % \date        2015-09-03
-% \update      2015-09-03
+% \update      2015-09-04
 % \version     $Revision$
 % \license     $XPC_GPL_LICENSE$
 %
@@ -135,7 +135,7 @@ Components of the final proprietary track size:
 \subsubsection{MIDI Variable-Length Value}
 \label{subsec:midi_variable_length_value}
 
-Length of a variable length value:
+   Length of a variable length value:
 
    https://en.wikipedia.org/wiki/Variable-length\_quantity
 
@@ -149,37 +149,49 @@ Length of a variable length value:
 \subsubsection{MIDI Track Chunk}
 \label{subsec:midi_track_chunk}
 
-Track chunk == MTrk" + length + track\_event [+ track\_event ...]
+   Track chunk == MTrk + length + track\_event [+ track\_event ...]
 
-"MTrk" 4 bytes the literal string MTrk. This marks the beginning of a track.
-length 4 bytes the number of bytes in the track chunk following this number.
-That is, the marker and length are not counted in the length value.
+   \begin{itemize}
+      \item \textsl{MTrk} is 4 bytes representing the literal string "MTrk".
+         This marks the beginning of a track.
+      \item \textsl{length} is 4 bytes the number of bytes in the track
+         chunk following this number.  That is, the marker and length are
+         not counted in the length value.
+      \item \textsl{track\_event} denotes a sequenced track event; usually
+         there are many track events in a  track.  However, some of the
+         events may simply be informational, and not modify the audio
+         output.
+   \end{itemize}
 
-track\_event denotes a sequenced track event.
-
-A track event consists of a delta time since the last event, and one of three
-types of events.
+   A track event consists of a delta-time since the last event, and one of
+   three types of events.
  
-track\_event = v\_time + midi\_event | meta\_event | sysex\_event
+   track\_event = v\_time + midi\_event | meta\_event | sysex\_event
  
-v\_time variable length value for elapsed time (delta time) from the previous
-event to this event.
-
-midi\_event = any MIDI channel message such as note-on or note-off.
-
-meta\_event = an SMF meta event.
-
-sysex\_event = an SMF system exclusive event.
+   \begin{itemize}
+      \item \textsl{v\_time} is the variable length value for elapsed time
+         (delta time) from the previous event to this event.
+      \item \textsl{midi\_event} is any MIDI channel message such as note-on
+         or note-off.
+      \item \textsl{meta\_event} is an SMF meta event.
+      \item \textsl{sysex\_event} is an SMF system exclusive event.
+   \end{itemize}
 
 \subsubsection{MIDI Meta Events}
 \label{subsec:midi_meta_events}
 
-Meta events are non-MIDI data of various sorts consisting of a fixed prefix,
-type indicator, a length field, and actual event data..
+   Meta events are non-MIDI data of various sorts consisting of a fixed prefix,
+   type indicator, a length field, and actual event data..
  
    meta\_event = 0xFF + meta\_type + v\_length + event\_data\_bytes
 
-meta\_type 1 byte, meta event types:
+   \begin{itemize}
+      \item \textsl{meta\_type} is 1 byte, expressing one of the meta event
+         types shown in the table that follows this list.
+      \item \textsl{v\_length} is length of meta event data, a variable
+         length value.
+      \item \textsl{event\_data\_bytes} is the actual event data.
+   \end{itemize}
 
    \begin{table}
       \caption{MIDI Meta Event Types}
@@ -204,21 +216,17 @@ meta\_type 1 byte, meta event types:
       \end{tabular}
    \end{table}
 
-v\_length = length of meta event data, a variable length value.
+   \textsl{Timidity} reads the legacy and new formats and plays the tune.
+   It saves the "b4uacuse" tune out, in both formats, with a "MIDI
+   divisions" value of 192, versus its original value of 120.  The song
+   plays a little bit faster after this conversion.
 
-event\_data\_bytes = the actual event data.
-
-\textsl{Timidity} reads the legacy and new formats and plays the tune.  It
-saves the "b4uacuse" tune out, in both formats, with a "MIDI divisions"
-value of 192, versus its original value of 120.  The song
-plays a little bit faster after this conversion.
-
-The \textsl{midicvt} application does not read the legacy format.  It
-expects to see the MTrk marker.  Even if the --ignore option is provided,
-\textsl{midicvt} does not like the legacy \textsl{Seq24} format.
-However, as the following table shows, most applications are more forgiving,
-and can read the legacy format.  The \textsl{gsequencer} has some major
-issues, but it is probably our setup (no JACK running?)
+   The \textsl{midicvt} application does not read the legacy format.  It
+   expects to see the MTrk marker.  Even if the --ignore option is provided,
+   \textsl{midicvt} does not like the legacy \textsl{Seq24} format.
+   However, as the following table shows, most applications are more
+   forgiving, and can read the legacy format.  The \textsl{gsequencer} has
+   some major issues, but it is probably our setup (no JACK running?)
 
    \begin{table}
       \caption{Application Support for MIDI Files}

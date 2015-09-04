@@ -6,7 +6,7 @@
 % \library     Documents
 % \author      Chris Ahlstrom
 % \date        2015-08-31
-% \update      2015-09-03
+% \update      2015-09-04
 % \version     $Revision$
 % \license     $XPC_GPL_LICENSE$
 %
@@ -124,8 +124,8 @@
    sequencer-specific (SeqSpec) items are saved, to preserve this extra
    information.  In legacy mode, \textsl{Sequencer24} saves this information
    in the same format as \textsl{Seq24}.  Unfortunately, this format is
-   not quite standard, and some MIDI applications may refuse to parse this
-   section. 
+   not quite standard, and a few MIDI applications may produce error
+   messages (as opposed to just ignoring it) when parsing this section. 
    
    \textbf{New:}
    \index{new!seqspec format}
@@ -300,7 +300,8 @@
 
    \itempar{Show key labels on sequence}{keyboard!show labels}
    This item, if enabled, shows the key labels in the lower-right corner of
-   each loop/pattern in the Patterns window.
+   each loop/pattern in the Patterns window.  This feature is useful
+   for live playback and control of a song.
 
    \itempar{Control keys}{keyboard!control keys}
    This block of fields provides shortcut keys for many operations of
@@ -369,11 +370,7 @@
    and can also be shown in each loop/pattern box.  No need to list them all
    here!
 
-   TODO: \index{todo!mute-group}
-   One thing we need to discover is just what this mute-grouping
-   means functionally.
-
-   Apparently groups work with playing screen set only.
+   Apparently groups work with the playing screen set only.
    Change the screenset and give the command to make it the playing one
    (e.g. set the HOME key for this purpose.)
 
@@ -525,7 +522,7 @@
 \end{figure}
 
    That dialog provides access to the credits for the program, including the
-   authors and the project documentor.
+   authors and the project documentors.
 
 \begin{figure}[H]
    \centering 
@@ -546,7 +543,6 @@
 
    Shows who has documented this project.  Say, maybe "we" can get "our"
    name there someday!  \texttt{:-)}
-
 
 %-------------------------------------------------------------------------------
 % vim: ts=3 sw=3 et ft=tex
