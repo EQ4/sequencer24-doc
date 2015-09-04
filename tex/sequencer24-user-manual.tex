@@ -87,6 +87,7 @@
    development (2010 seems to be the last update).  There are a number of
    half-hearted forks for it on \textsl{GitHub}, and some conversions
    to Java-based and browser-based code, and some patches.
+   There is also a fairly extensive port to Windows.
    So, why would we bother creating another fork of \textsl{Seq24}?
 
 \subsection{Sequencer24: Why?}
@@ -172,7 +173,9 @@
    \end{itemize}
 
    In the future, version 1.0 will be even more object-oriented, hopefully
-   even faster, and easier to modify.
+   even faster, and easier to modify.  Eventually, we might get it to build
+   for Windows, using MingW, though this is a low priority and a fairly
+   significant task.
 
 \subsection{Document Structure}
 \label{subsec:introduction_document_structure}
@@ -287,6 +290,10 @@
 % Building and debugging Sequencer24
 
 % \input{yum_build}
+
+% Discussion of MIDI formats related to Seq24 and Sequencer24
+
+\input{seq24_midi_formats}
 
 \section{Summary}
 \label{sec:summary}

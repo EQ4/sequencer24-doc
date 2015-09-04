@@ -1,0 +1,244 @@
+%-------------------------------------------------------------------------------
+% seq24_midi_formats
+%-------------------------------------------------------------------------------
+%
+% \file        seq24_midi_formats.tex
+% \library     Documents
+% \author      Chris Ahlstrom
+% \date        2015-09-03
+% \update      2015-09-03
+% \version     $Revision$
+% \license     $XPC_GPL_LICENSE$
+%
+%     Provides a discussion of the formats (legacy and new) of the last
+%     track of an Seq24/Sequencer24 MIDI file.
+%
+%-------------------------------------------------------------------------------
+
+\section{Proprietary Track Format and Other MIDI Notes}
+\label{sec:proprietary_track_and_midi_notes}
+
+\subsection{Legacy Proprietary Track Format}
+\label{subsec:legacy_proprietary_track_format}
+
+   After all the counted MIDI tracks are read, \textsl{Seq24} checks for
+   extra data.  If there is extra data, \textsl{Seq24} reads a long value.
+   The first one encountered is a MIDI "sequencer-specific"
+   (\textsl{SeqSpec}) section.  It starts with
+
+   \begin{verbatim}
+      0x24240010 == Seq24's c\_midictrl proprietary value.
+   \end{verbatim}
+
+   Getting this value first is simplified MIDI in two ways.
+   First, the second does not begin with any kind of track marker.  MIDI
+   requires an "MTrk" marker to start a track, though it also requires
+   unknown markers to be supported.  Some applications, like
+   \textsl{timidity}, handle this situation.  Others, like \textsl{midicvt},
+   complain about an unexpected header marker.
+   Second, normally, MIDI wants to see the triad of
+
+   \begin{verbatim}
+      status = FF, type= 7F (proprietary), length = whatever
+   \end{verbatim}
+
+   to precede proprietary data.
+   Now, as the table below (REFERENCE) shows, most applications accept
+   the shortcut legacy format, but \textsl{midicvt} does not.
+
+   So, as a "bug" fix, we want to be able to write and read
+   this information properly in \textsl{Sequencer24}.
+   We also need to be able to read legacy Seq24 MIDI files.
+
+   Any way, we have the c\_midictrl information now.  Next, we read a long
+   value, seqs.  It is 0.
+
+   \begin{verbatim}
+      24 24 00 10 00 00 00 00
+   \end{verbatim}
+
+   Read the next long value, 0x24240003.  This is c\_midiclocks.  We get a
+   value of 0 for "TrackLength" (now a local variable called "busscount"):
+
+   \begin{verbatim}
+      24 24 00 03 00 00 00 00
+   \end{verbatim}
+
+   If busscount were > 0, then for each value, we would read a byte value
+   represent the bus a clock was on, and setting the clock value of the
+   master MIDI buss.
+
+   Another check for more data is made.
+
+   \begin{verbatim}
+      24 24 00 05 00 20 00 00
+   \end{verbatim}
+
+   0x24240005 is c\_notes.  The value screen\_sets is read (two bytes) and
+   here is 0x20 = 32.  For each screen-set:
+
+   \begin{verbatim}
+      len = read\_short()
+   \end{verbatim}
+
+   If non-zero, each of the len bytes is appended as a string.  Here, len is 
+   0 for all 32 screensets, so the screen-set notepad is set to an empty
+   string.
+
+   Another check for more data is made.
+
+   \begin{verbatim}
+      24 24 00 07 00 00 00 78
+   \end{verbatim}
+
+   0x24240007 is c\_bpmtag.  The long value is read and sets the perform
+   object's bpm value.  Here, it is 120 bpm.
+
+   Another check for more data is made.
+
+   \begin{verbatim}
+      24 24 00 09 00 00 04 00
+   \end{verbatim}
+
+   0x24240009 is c\_mutegroups.  The long value obtained here is 1024.
+   If this value is not equal to the constant c\_gmute\_tracks (1024), a
+   warning is emitted to the console, but processing continues anyway,
+   32 x 32 long values are read to select the given group-mute, and then set
+   each of its 32 group-mute-states.
+
+   In our sample file, 32 groups are specified, but all 32 group-mute-state
+   values for each are 0.
+
+Components of the final proprietary track size:
+
+   \begin{enumber}
+      \item Delta time.  1 byte, always 0x00.
+      \item Sequence number.  5 bytes.  OPTIONAL.
+      \item Track name. 3 + 10 or 3 + 15
+      \item Series of proprietary specs:
+      \begin{itemize}
+         \item Prop header:
+         \begin{itemize}
+            \item If legacy format, 4 bytes.
+            \item Otherwise, 2 bytes + varinum\_size(length) + 4 bytes.
+            \item Length of the prop data.
+         \end{itemize}
+      \end{itemize}
+      \item Track End. 3 bytes.
+   \end{enumber}
+
+\subsection{MIDI Information}
+\label{subsec:midi_information}
+
+   This section just provides some useful information about MIDI data.
+
+\subsubsection{MIDI Variable-Length Value}
+\label{subsec:midi_variable_length_value}
+
+Length of a variable length value:
+
+   https://en.wikipedia.org/wiki/Variable-length\_quantity
+
+   \begin{verbatim}
+      1 byte:  0x00 to 0x7F
+      2 bytes: 0x80 to 0x3FFF
+      3 bytes: 0x4000 to 0x001FFFFF
+      4 bytes: 0x200000 to 0x0FFFFFFF
+   \end{verbatim}
+
+\subsubsection{MIDI Track Chunk}
+\label{subsec:midi_track_chunk}
+
+Track chunk == MTrk" + length + track\_event [+ track\_event ...]
+
+"MTrk" 4 bytes the literal string MTrk. This marks the beginning of a track.
+length 4 bytes the number of bytes in the track chunk following this number.
+That is, the marker and length are not counted in the length value.
+
+track\_event denotes a sequenced track event.
+
+A track event consists of a delta time since the last event, and one of three
+types of events.
+ 
+track\_event = v\_time + midi\_event | meta\_event | sysex\_event
+ 
+v\_time variable length value for elapsed time (delta time) from the previous
+event to this event.
+
+midi\_event = any MIDI channel message such as note-on or note-off.
+
+meta\_event = an SMF meta event.
+
+sysex\_event = an SMF system exclusive event.
+
+\subsubsection{MIDI Meta Events}
+\label{subsec:midi_meta_events}
+
+Meta events are non-MIDI data of various sorts consisting of a fixed prefix,
+type indicator, a length field, and actual event data..
+ 
+   meta\_event = 0xFF + meta\_type + v\_length + event\_data\_bytes
+
+meta\_type 1 byte, meta event types:
+
+   \begin{table}
+      \caption{MIDI Meta Event Types}
+      \label{table:midi_meta_event_types}
+      \begin{tabular}{l l}
+         Type	& Event \\
+         0x00	& Sequence number \\
+         0x01	& Text event \\
+         0x02	& Copyright notice \\
+         0x03	& Sequence or track name \\
+         0x04	& Instrument name \\
+         0x05	& Lyric text \\
+         0x06	& Marker text \\
+         0x07	& Cue point \\
+         0x20	& MIDI channel prefix assignment \\
+         0x2F	& End of track \\
+         0x51	& Tempo setting \\
+         0x54	& SMPTE offset \\
+         0x58	& Time signature \\
+         0x59	& Key signature \\
+         0x7F	& Sequencer specific event \\
+      \end{tabular}
+   \end{table}
+
+v\_length = length of meta event data, a variable length value.
+
+event\_data\_bytes = the actual event data.
+
+\textsl{Timidity} reads the legacy and new formats and plays the tune.  It
+saves the "b4uacuse" tune out, in both formats, with a "MIDI divisions"
+value of 192, versus its original value of 120.  The song
+plays a little bit faster after this conversion.
+
+The \textsl{midicvt} application does not read the legacy format.  It
+expects to see the MTrk marker.  Even if the --ignore option is provided,
+\textsl{midicvt} does not like the legacy \textsl{Seq24} format.
+However, as the following table shows, most applications are more forgiving,
+and can read the legacy format.  The \textsl{gsequencer} has some major
+issues, but it is probably our setup (no JACK running?)
+
+   \begin{table}
+      \caption{Application Support for MIDI Files}
+      \label{table:midi_file_support_table}
+      \begin{tabular}{l l l l}
+         Application  & Legacy    & New       & Original File \\
+         ardour       & TBD       & TBD       & TBD \\
+         gsequencer   & No        & No        & No \\
+         lmms         & Yes       & Yes       & Yes \\
+         midi2ly      & Yes       & Yes       & TBD \\
+         midicvt      & No        & Yes       & Yes \\
+         midish       & TBD       & TBD       & TBD \\
+         playmidi     & TBD       & TBD       & TBD \\
+         pmidi        & TBD       & TBD       & TBD \\
+         qtractor     & Yes       & Yes       & Yes \\
+         rosegarden   & Yes       & Yes       & Yes \\
+         timidity     & Yes       & Yes       & Yes \\
+      \end{tabular}
+   \end{table}
+
+%-------------------------------------------------------------------------------
+% vim: ts=3 sw=3 et ft=tex
+%-------------------------------------------------------------------------------
