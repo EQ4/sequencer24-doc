@@ -21,13 +21,33 @@
 \subsection{Legacy Proprietary Track Format}
 \label{subsec:legacy_proprietary_track_format}
 
+   Before we get to the last, proprietary track, note that the tracks that
+   precede it include the SeqSpec ("sequencer-specific", sort of)
+   control tags shown in table~\ref{table:seqspec_items_normal_tracks}.
+
+   \begin{table}[htb]
+      \centering
+      \caption{SeqSpec Items in Normal Tracks}
+      \label{table:seqspec_items_normal_tracks}
+      \begin{tabular}{l l}
+         \texttt{c\_midibus}        & \texttt{24 24 00 01 00 00 00 00} \\
+         \texttt{c\_midich}         & \texttt{24 24 00 02 00 00 00 00} \\
+         \texttt{c\_timesig}        & \texttt{24 24 00 06 00 00 00 00} \\
+         \texttt{c\_triggers\_new}  & \texttt{24 24 00 08 00 00 00 00} \\
+      \end{tabular}
+   \end{table}
+
+   Note that these tags (not created by the application, and not present in
+   the proprietary track) are preceded by the standard MIDI
+   "FF 75 len" meta-event sequence.
+
    After all the counted MIDI tracks are read, \textsl{Seq24} checks for
    extra data.  If there is extra data, \textsl{Seq24} reads a long value.
    The first one encountered is a MIDI "sequencer-specific"
    (\textsl{SeqSpec}) section.  It starts with
 
    \begin{verbatim}
-      0x24240010 == Seq24's c\_midictrl proprietary value.
+      0x24240010 == a Seq24 c\_midictrl proprietary value
    \end{verbatim}
 
    Getting this value first is simplified MIDI in two ways.
@@ -50,23 +70,24 @@
    this information properly in \textsl{Sequencer24}.
    We also need to be able to read legacy Seq24 MIDI files.
 
-   Any way, we have the c\_midictrl information now.  Next, we read a long
-   value, seqs.  It is 0.
+   Any way, we have the \textbf{c\_midictrl} information now.  Next, we read
+   a long value, seqs.  It is 0.
 
    \begin{verbatim}
       24 24 00 10 00 00 00 00
    \end{verbatim}
 
-   Read the next long value, 0x24240003.  This is c\_midiclocks.  We get a
-   value of 0 for "TrackLength" (now a local variable called "busscount"):
+   Read the next long value, 0x24240003.  This is \textbf{c\_midiclocks}.
+   We get a value of 0 for "TrackLength" (now a local variable called
+   "busscount"):
 
    \begin{verbatim}
       24 24 00 03 00 00 00 00
    \end{verbatim}
 
-   If busscount were > 0, then for each value, we would read a byte value
-   represent the bus a clock was on, and setting the clock value of the
-   master MIDI buss.
+   If busscount were greater than 0, then for each value, we would read a
+   byte value represent the bus a clock was on, and setting the clock value
+   of the master MIDI buss.
 
    Another check for more data is made.
 
@@ -74,16 +95,17 @@
       24 24 00 05 00 20 00 00
    \end{verbatim}
 
-   0x24240005 is c\_notes.  The value screen\_sets is read (two bytes) and
+   0x24240005 is \textbf{c\_notes}.  The value screen\_sets is read (two
+   bytes) and
    here is 0x20 = 32.  For each screen-set:
 
    \begin{verbatim}
       len = read\_short()
    \end{verbatim}
 
-   If non-zero, each of the len bytes is appended as a string.  Here, len is 
-   0 for all 32 screensets, so the screen-set notepad is set to an empty
-   string.
+   If non-zero, each of the \texttt{len} bytes is appended as a string.
+   Here, len is 0 for all 32 screensets, so the screen-set notepad is set to
+   an empty string.
 
    Another check for more data is made.
 
@@ -91,8 +113,8 @@
       24 24 00 07 00 00 00 78
    \end{verbatim}
 
-   0x24240007 is c\_bpmtag.  The long value is read and sets the perform
-   object's bpm value.  Here, it is 120 bpm.
+   0x24240007 is \textbf{c\_bpmtag}.  The long value is read and sets the
+   perform object's bpm value.  Here, it is 120 bpm.
 
    Another check for more data is made.
 
@@ -100,37 +122,76 @@
       24 24 00 09 00 00 04 00
    \end{verbatim}
 
-   0x24240009 is c\_mutegroups.  The long value obtained here is 1024.
-   If this value is not equal to the constant c\_gmute\_tracks (1024), a
-   warning is emitted to the console, but processing continues anyway,
-   32 x 32 long values are read to select the given group-mute, and then set
-   each of its 32 group-mute-states.
+   0x24240009 is \textbf{c\_mutegroups}.  The long value obtained here is
+   1024.  If this value is not equal to the constant
+   \textbf{c\_gmute\_tracks} (1024), a warning is emitted to the console,
+   but processing continues anyway, 32 x 32 long values are read to select
+   the given group-mute, and then set each of its 32 group-mute-states.
 
    In our sample file, 32 groups are specified, but all 32 group-mute-state
    values for each are 0.
 
-Components of the final proprietary track size:
+   So, to summarize the legacy proprietary track's data, ignoring the data
+   itself, which is mostly 0 values, as shown in
+   table~\ref{table:seqspec_items_legacy_track}
+
+   \begin{table}[htb]
+      \centering
+      \caption{SeqSpec Items in Legacy Proprietary Track}
+      \label{table:seqspec_items_legacy_track}
+      \begin{tabular}{l l}
+\texttt{c\_midictrl}    & \texttt{24 24 00 10 00 00 00 00} \\
+\texttt{c\_midiclocks}  & \texttt{24 24 00 03 00 00 00 00} (buss count = 0) \\
+\texttt{c\_notes}       & \texttt{24 24 00 05 00 20 00 00} (screen sets = 32) \\
+\texttt{c\_bpmtag}      & \texttt{24 24 00 07 00 00 00 78} (bpm = 120) \\
+\texttt{c\_mutegroups}  & \texttt{24 24 00 09 00 00 04 00} (mg = 1024) \\
+      \end{tabular}
+   \end{table}
+
+   The new format (again, ignoring the data) takes up a few more bytes.
+   It starts with the normal track marker and size data, followed by a
+   made-up track name ("Sequencer24-S"),
+   as shown in table~\ref{table:seqspec_items_new_track}.
+
+   \begin{table}[htb]
+      \centering
+      \caption{SeqSpec Items in New Proprietary Track}
+      \label{table:seqspec_items_new_track}
+      \begin{tabular}{l l}
+\texttt{"MTrk" etc.}   & \texttt{4d 54 72 6b 00 00 11 0d 00 ...} \\
+\texttt{Track name}    & \texttt{53 65 71 75 65 6e 63 65 72 32 34 2d 53} \\
+\texttt{c\_midictrl}   & \texttt{ff 7f 04 24 24 00 10 00} (???) \\
+\texttt{c\_midiclocks} & \texttt{ff 7f 04 24 24 00 03 00} (buss count = 0) \\
+\texttt{c\_notes}      & \texttt{ff 7f 46 24 24 00 05 00 20 00...} (screen sets = 32) \\
+\texttt{c\_bpmtag}     & \texttt{ff 7f 08 24 24 00 07 00 00 00 78} (bpm = 120) \\
+\texttt{c\_mutegroups} & \texttt{ff 7f a1 08 24 24 00 09 00 00 04 00...} (mg = 1024) \\
+      \end{tabular}
+   \end{table}
+
+For the new format, the components of the final proprietary track size are
+as shown here:
 
    \begin{enumber}
-      \item Delta time.  1 byte, always 0x00.
-      \item Sequence number.  5 bytes.  OPTIONAL.
-      \item Track name. 3 + 10 or 3 + 15
-      \item Series of proprietary specs:
+      \item \textbf{Delta time}.  1 byte, always 0x00.
+      \item \textbf{Sequence number}.  5 bytes.  OPTIONAL.
+      \item \textbf{Track name}. 3 + 10 or 3 + 15
+      \item \textbf{Series of proprietary specs}:
       \begin{itemize}
-         \item Prop header:
+         \item \textbf{Prop header}:
          \begin{itemize}
             \item If legacy format, 4 bytes.
             \item Otherwise, 2 bytes + varinum\_size(length) + 4 bytes.
             \item Length of the prop data.
          \end{itemize}
       \end{itemize}
-      \item Track End. 3 bytes.
+      \item \textbf{Track End}. 3 bytes.
    \end{enumber}
 
 \subsection{MIDI Information}
 \label{subsec:midi_information}
 
-   This section just provides some useful information about MIDI data.
+   This section just provides some useful, basic information about MIDI
+   data.
 
 \subsubsection{MIDI Variable-Length Value}
 \label{subsec:midi_variable_length_value}
@@ -194,6 +255,7 @@ Components of the final proprietary track size:
    \end{itemize}
 
    \begin{table}
+      \centering
       \caption{MIDI Meta Event Types}
       \label{table:midi_meta_event_types}
       \begin{tabular}{l l}
@@ -224,25 +286,34 @@ Components of the final proprietary track size:
    The \textsl{midicvt} application does not read the legacy format.  It
    expects to see the MTrk marker.  Even if the --ignore option is provided,
    \textsl{midicvt} does not like the legacy \textsl{Seq24} format.
-   However, as the following table shows, most applications are more
-   forgiving, and can read the legacy format.  The \textsl{gsequencer} has
-   some major issues, but it is probably our setup (no JACK running?)
+   However, as table~\ref{table:midi_file_support_table}
+   shows, most applications are more
+   forgiving, and can read (or ignore) the legacy format.  The
+   \textsl{gsequencer} has some major issues, but it is probably our setup
+   (no JACK running?)
 
    \begin{table}
+      \centering
       \caption{Application Support for MIDI Files}
       \label{table:midi_file_support_table}
       \begin{tabular}{l l l l}
-         Application  & Legacy    & New       & Original File \\
+         \textbf{Application}  &
+            \textbf{Legacy} &
+            \textbf{New} & 
+            \textbf{Original File} \\
          ardour       & TBD       & TBD       & TBD \\
+         composite    & TBD       & TBD       & TBD \\
          gsequencer   & No        & No        & No \\
          lmms         & Yes       & Yes       & Yes \\
          midi2ly      & Yes       & Yes       & TBD \\
          midicvt      & No        & Yes       & Yes \\
          midish       & TBD       & TBD       & TBD \\
+         muse         & TBD       & TBD       & TBD \\
          playmidi     & TBD       & TBD       & TBD \\
          pmidi        & TBD       & TBD       & TBD \\
          qtractor     & Yes       & Yes       & Yes \\
          rosegarden   & Yes       & Yes       & Yes \\
+         superlooper  & TBD       & TBD       & TBD \\
          timidity     & Yes       & Yes       & Yes \\
       \end{tabular}
    \end{table}

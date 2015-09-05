@@ -6,7 +6,7 @@
 % \library     Documents
 % \author      Chris Ahlstrom
 % \date        2015-04-20
-% \update      2015-09-02
+% \update      2015-09-04
 % \version     $Revision$
 % \license     $XPC_GPL_LICENSE$
 %
@@ -167,6 +167,11 @@
    ("\nameref{#1}")
    on page~\pageref{#1}\ignorespaces
 }
+
+% For lining up enumerated items.
+
+\newcommand{\itab}[1]{\hspace{0em}\rlap{#1}}
+\newcommand{\tab}[1]{\hspace{.1\textwidth}\rlap{#1}}
 
 % An attempt to reduce excess vertical space.  Does not work.  See the
 % top of yoshimi-user-manual.tex instead.
