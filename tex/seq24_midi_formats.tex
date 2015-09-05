@@ -6,7 +6,7 @@
 % \library     Documents
 % \author      Chris Ahlstrom
 % \date        2015-09-03
-% \update      2015-09-04
+% \update      2015-09-05
 % \version     $Revision$
 % \license     $XPC_GPL_LICENSE$
 %
@@ -23,7 +23,9 @@
 
    Before we get to the last, proprietary track, note that the tracks that
    precede it include the SeqSpec ("sequencer-specific", sort of)
-   control tags shown in table~\ref{table:seqspec_items_normal_tracks}.
+   control tags shown in \tableref{table:seqspec_items_normal_tracks}.
+   These control tags are global constants in the \textsl{Seq24} source
+   code, ranging from 0x24240001 to 0x24240010..
 
    \begin{table}[htb]
       \centering
@@ -38,8 +40,11 @@
    \end{table}
 
    Note that these tags (not created by the application, and not present in
-   the proprietary track) are preceded by the standard MIDI
-   "FF 75 len" meta-event sequence.
+   the proprietary track, but created by other MIDI applications) are
+   preceded by the standard MIDI "FF 7F length" meta-event sequence.
+
+   The following discussion applies to the final "proprietary" track as
+   saved in the legacy \textsl{Seq24} format.
 
    After all the counted MIDI tracks are read, \textsl{Seq24} checks for
    extra data.  If there is extra data, \textsl{Seq24} reads a long value.
@@ -63,8 +68,9 @@
    \end{verbatim}
 
    to precede proprietary data.
-   Now, as the table below (REFERENCE) shows, most applications accept
-   the shortcut legacy format, but \textsl{midicvt} does not.
+   Now, as shown by \tableref{table:midi_file_support_table},
+   most applications accept the shortcut legacy format, but \textsl{midicvt}
+   does not.
 
    So, as a "bug" fix, we want to be able to write and read
    this information properly in \textsl{Sequencer24}.
@@ -88,7 +94,6 @@
    If busscount were greater than 0, then for each value, we would read a
    byte value represent the bus a clock was on, and setting the clock value
    of the master MIDI buss.
-
    Another check for more data is made.
 
    \begin{verbatim}
@@ -106,7 +111,6 @@
    If non-zero, each of the \texttt{len} bytes is appended as a string.
    Here, len is 0 for all 32 screensets, so the screen-set notepad is set to
    an empty string.
-
    Another check for more data is made.
 
    \begin{verbatim}
@@ -115,7 +119,6 @@
 
    0x24240007 is \textbf{c\_bpmtag}.  The long value is read and sets the
    perform object's bpm value.  Here, it is 120 bpm.
-
    Another check for more data is made.
 
    \begin{verbatim}
@@ -133,7 +136,7 @@
 
    So, to summarize the legacy proprietary track's data, ignoring the data
    itself, which is mostly 0 values, as shown in
-   table~\ref{table:seqspec_items_legacy_track}
+   \tableref{table:seqspec_items_legacy_track}
 
    \begin{table}[htb]
       \centering
@@ -151,7 +154,7 @@
    The new format (again, ignoring the data) takes up a few more bytes.
    It starts with the normal track marker and size data, followed by a
    made-up track name ("Sequencer24-S"),
-   as shown in table~\ref{table:seqspec_items_new_track}.
+   as shown in \tableref{table:seqspec_items_new_track}.
 
    \begin{table}[htb]
       \centering
@@ -196,9 +199,15 @@ as shown here:
 \subsubsection{MIDI Variable-Length Value}
 \label{subsec:midi_variable_length_value}
 
-   Length of a variable length value:
+   \index{VLV}
+   A variable-length value (VLV) is a quantity that uses additional bytes
+   and continuation bits to encode large numbers without confusing a MIDI
+   interpreter.
+   See \url{https://en.wikipedia.org/wiki/Variable-length\_quantity}.
 
-   https://en.wikipedia.org/wiki/Variable-length\_quantity
+   The length of a variable length value obviously depends on the value it
+   represents.  Here is a simple list of the numbers that can be represented
+   by a VLV:
 
    \begin{verbatim}
       1 byte:  0x00 to 0x7F
@@ -210,7 +219,7 @@ as shown here:
 \subsubsection{MIDI Track Chunk}
 \label{subsec:midi_track_chunk}
 
-   Track chunk == MTrk + length + track\_event [+ track\_event ...]
+   \texttt{Track chunk == MTrk + length + track\_event [+ track\_event ...]}
 
    \begin{itemize}
       \item \textsl{MTrk} is 4 bytes representing the literal string "MTrk".
@@ -227,7 +236,7 @@ as shown here:
    A track event consists of a delta-time since the last event, and one of
    three types of events.
  
-   track\_event = v\_time + midi\_event | meta\_event | sysex\_event
+   \texttt{track\_event = v\_time + midi\_event | meta\_event | sysex\_event}
  
    \begin{itemize}
       \item \textsl{v\_time} is the variable length value for elapsed time
@@ -244,7 +253,7 @@ as shown here:
    Meta events are non-MIDI data of various sorts consisting of a fixed prefix,
    type indicator, a length field, and actual event data..
  
-   meta\_event = 0xFF + meta\_type + v\_length + event\_data\_bytes
+   \texttt{meta\_event = 0xFF + meta\_type + v\_length + event\_data\_bytes}
 
    \begin{itemize}
       \item \textsl{meta\_type} is 1 byte, expressing one of the meta event
@@ -279,18 +288,21 @@ as shown here:
    \end{table}
 
    \textsl{Timidity} reads the legacy and new formats and plays the tune.
-   It saves the "b4uacuse" tune out, in both formats, with a "MIDI
-   divisions" value of 192, versus its original value of 120.  The song
-   plays a little bit faster after this conversion.
+   \textsl{Sequencer24}  saves the "b4uacuse" tune out, in both formats,
+   with a "MIDI divisions" value of 192, versus its original value of 120.
+   The song plays a little bit faster after this conversion.
 
-   The \textsl{midicvt} application does not read the legacy format.  It
-   expects to see the MTrk marker.  Even if the --ignore option is provided,
-   \textsl{midicvt} does not like the legacy \textsl{Seq24} format.
-   However, as table~\ref{table:midi_file_support_table}
-   shows, most applications are more
+   The \textsl{midicvt} application does not read the legacy \textsl{Seq24}
+   file format.  It
+   expects to see the MTrk marker.  Even if the \textsl{midicvt}
+   \texttt{--ignore} option is provided,
+   \textsl{midicvt} does not like the legacy \textsl{Seq24} format, and ends
+   with an error message.
+   However, as shown by \tableref{table:midi_file_support_table},
+   most applications are more
    forgiving, and can read (or ignore) the legacy format.  The
-   \textsl{gsequencer} has some major issues, but it is probably our setup
-   (no JACK running?)
+   \textsl{gsequencer} application has some major issues in our
+   installation, but it is probably our setup.  (No JACK running?)
 
    \begin{table}
       \centering

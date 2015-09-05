@@ -6,11 +6,11 @@
 % \library     Documents
 % \author      Chris Ahlstrom
 % \date        2015-08-31
-% \update      2015-09-03
+% \update      2015-09-05
 % \version     $Revision$
 % \license     $XPC_GPL_LICENSE$
 %
-%     Provides the concepts.
+%     Provides some concepts and terms needed to understand Sequencer24.
 %
 %-------------------------------------------------------------------------------
 
@@ -24,7 +24,7 @@
 \label{subsec:concepts_terms}
 
    This section doesn't provide comprehensive coverage of terms.  It
-   covers mainly terms that puzzled the author at first or that are
+   covers terms that puzzled the author at first or that are
    necessary to understand the \textsl{Sequencer24} program.
 
 \subsubsection{Concepts / Terms / armed}
@@ -54,7 +54,8 @@
 
    \index{bus}
    \index{buss}
-   A \textsl{buss} (also spelled "bus" these days) is an entity onto which
+   A \textsl{buss} (also spelled "bus" these days;
+   \url{https://en.wikipedia.org/wiki/Busbar}) is an entity onto which
    MIDI events can be placed, in order to be heard or to affect the
    playback.
 
@@ -133,27 +134,30 @@
    In the jargon of \textsl{Sequencer24}, a
    \index{performance}
    \textsl{performance} is an organized collection of patterns.
-   This layout of patterns is created using the Song Editor.
+   This layout of patterns is created using the Song Editor, sometimes
+   called the "performance editor".
 
 \subsubsection{Concepts / Terms / queue mode}
 \label{subsubsec:concepts_terms_queue_mode}
 
    To "queue" a pattern means to ready it for playback on the next repeat of
    a pattern.  A pattern can be armed immediately, or it can be queued to
-   play back the next time the pattern starts.
+   play back the next time the pattern restarts.
 
    A set of queued patterns can be temporarily stored, so that a different
    set of playbacks can occur, before the original set of playbacks is
    restored.
 
+   \index{keep queue}
+   \index{queue!keep}
    The "keep queue" functionality allows the queue to be held without
    holding down a button the whole time.
 
 \subsubsection{Concepts / Terms / screen set}
 \label{subsubsec:concepts_terms_screen_set}
 
-   The \textsl{screen set}
    \index{screen set}
+   The \textsl{screen set}
    is a set of patterns that fit within the 8x4 grid of loops/patterns in the
    Patterns panel.
    \textsl{Sequencer24} supports multiple screens sets, up to 32 of them,
@@ -184,11 +188,47 @@
    \index{song}
    A \textsl{song} is a collection of patterns in a specific layout, as
    assembled via the Song Editor window.
+   Also see \ref{subsubsec:concepts_terms_performance}
 
-\subsection{Concepts / Other}
-\label{subsec:concepts_other}
+\subsection{Concepts / MIDI and Audio Subsystems}
+\label{subsec:concepts_midi_audio_subsystems}
 
-TODO: Describe MIDI, JACK, ALSA, and software synthesizers.
+\subsubsection{Concepts / MIDI and Audio Subsystems / ALSA}
+\label{subsubsec:concepts_midi_audio_alsa}
+
+   \textsl{ALSA} is a sound and MIDI system for Linux, with components built
+   into the Linux kernel. It is the main subsystem used by
+   \textsl{Sequencer24}.  The name of the library used to build
+   \textsl{ALSA} projects is \texttt{libasound}.
+   See reference \cite{alsa}.
+
+\subsubsection{Concepts / MIDI and Audio Subsystems / PortMIDI}
+\label{subsubsec:concepts_midi_audio_portmidi}
+
+   \textsl{PortMIDI} is a cross-platform API (applications programming
+   interface) for MIDI.  It seems to be used in the "portmidi" C++ modules
+   included with the base source-code repository of \textsl{Seq24} available
+   (for example) from Debian Linux.  See reference \cite{portmidi}
+   for the PortMIDI home page.  Unfortunately, the code in the Debian
+   package is not quite ready to build on Windows.  We might fix that
+   someday, though Windows is not a high priority.
+
+   The SubatomicGlue Windows port of \textsl{Seq24} (see reference
+   \cite{subatomicglue}) bundles a version of the PortMIDI project with the
+   source code for the port.  It also provides a complete bundle of the
+   other products (e.g. gtkmm 2.4) needed to build and run the project.
+   (By the way, the Windows port is built with
+   MingW, which provides the GNU compilers and tools.  This is a good thing,
+   as Visual Studio Community, though "free", is not "Free".)
+
+\subsubsection{Concepts / MIDI and Audio Subsystems / JACK}
+\label{subsubsec:concepts_midi_audio_jack}
+
+   \textsl{JACK} is a cross-platform (with an emphasis on Linux)
+   API and infrastructure for making it easier to connect and reroute MIDI
+   and audio event between various applications and hardware ports.
+   See reference \cite{jack}.
+
 
 %-------------------------------------------------------------------------------
 % vim: ts=3 sw=3 et ft=tex

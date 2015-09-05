@@ -6,7 +6,7 @@
 % \library     Documents
 % \author      Chris Ahlstrom
 % \date        2015-08-31
-% \update      2015-09-01
+% \update      2015-09-05
 % \version     $Revision$
 % \license     $XPC_GPL_LICENSE$
 %
@@ -22,18 +22,47 @@
    pattern/loop/sequence in numbered columns, and the placement of each
    pattern at various musical bars in the song.
 
+   \index{performance}
    In \textsl{Sequencer24} parlance, the Song Editor creates a
    \textsl{performance}.
+   \index{song mode}
+   It also provides the "song mode" of \textsl{Sequencert24},
+   as opposed to the "live mode" provided by the Patterns Panel.
+
+   \index{song editor!takeover}
+   When the Song Editor has the
+   focus of the application, it takes over control from the Patterns Panel.
+   The Song Editor controls now control playback.  Once playback is
+   started in the Song Editor, some actions in the Patterns Panel no longer
+   have effect, effectively disabling live mode.
+
+   The Song Editor takes over the arming/unarming (unmuting/muting)
+   shown in the Patterns Panel.  The highlighting of armed/unarmed patterns
+   changes according to whether the pattern is playing in the Song Editor,
+   or not.  If one tries to change the muting using a hot-key (or even a
+   click) in the Patterns Panel, the Song Editor immediately returns the
+   pattern to the state it has in the Song Editor.  The only way to manually
+   change the muting then is to click the pattern's label in the Song
+   Editor.  Both the Song Editor and the Patterns Panel both reflect the
+   change in muting in the user interface.
 
 \begin{figure}[H]
    \centering 
-   \includegraphics[scale=0.75]{song-editor/song-editor-window.png}
+   \includegraphics[scale=0.75]{song-editor/song-editor-window-new.png}
    \caption{Song Editor Window}
    \label{fig:song_editor_window}
 \end{figure}
 
-   This dialog is not too complex, but
-   for exposition, we break it into a top panel and the rest of the window.
+   \index{new!empty pattern}
+   \textbf{New:} 
+   This dialog (in \textsl{Sequencer24}) shows any empty patterns
+   highlighted in yellow.  An empty pattern is one that exists, but
+   contains only meta information, and contains no MIDI events that
+   can be played.  For example, some tracks just serve as name tracks or
+   information tracks.
+   
+   The Song Editor is not too complex, but for exposition, we break it into
+   the top panel and the rest of the window.
 
 \subsection{Song Editor / Top Panel}
 \label{subsec:seq24_song_editor_top}
@@ -51,7 +80,7 @@
    \begin{enumber}
       \item \textbf{Stop}
       \item \textbf{Play}
-      \item \textbf{Loop}
+      \item \textbf{Play Loop}
       \item \textbf{Beats Per Bar}
       \item \textbf{Beat Unit}
       \item \textbf{Grid Snap}
@@ -73,14 +102,19 @@
    \itempar{Play}{song editor!play}
    \index{L marker}
    Starts the playback of the song, starting at the \textbf{L marker}.
+   The \textbf{L marker} serves as the start position for playback
+   in the Song Editor.  One can change the start position only when the
+   performance is not playing.
    \index{keys!space (play)}
    The keystroke for starting playback is the 'Space' character.
 
-   \itempar{Loop}{song editor!loop}
+   \itempar{Play Loop}{song editor!play loop}
+   \index{loop mode}
+   Activate loop mode. When Play is activated,  play the song and loop
+   between the
    \index{L marker}
    \index{R marker}
-   Play the song, looped between the \textbf{L marker} and the
-   \textbf{R marker}.
+   \textbf{L marker} and the \textbf{R marker}.
    This button is a state button, and its appearance indicates when it is
    depressed, and thus active.
    If this button is deactivated during playback, then playback will
@@ -196,11 +230,12 @@
          The title is the name of the pattern, for easy reference.
       \item \textbf{Channel}.
          \index{pattern!channel}
-         The channel number appears at the right of the title.
+         The channel number appears (redundantly)
+         at the right of the title.
       \item \textbf{Buss-Channel}.
-         \index{pattern!span}
-         This pair of numbers shows the MIDI buss number used in the pattern and
-         the channel used for the pattern.
+         \index{pattern!buss-channel}
+         This pair of numbers shows the MIDI buss number used in the pattern
+         and the channel used for the pattern.
       \item \textbf{Beat/Measure}.
          \index{pattern!beat}
          This pair of numbers is the standard time-signature of the pattern.
@@ -208,8 +243,11 @@
          \index{song editor!mute indicator}
          The letter M is in a black box if the track/pattern is muted, and a
          white box if it is unmuted.
-      \item \textbf{Empty}.
-         Empty tracks are indicated by a dark-gray filling.
+      \item \textbf{Empty Track}.
+         Completely empty tracks (no track events or meta events)
+         are indicated by a dark-gray filling in the pattern column.
+         Tracks that have only meta information, but no playable event, are
+         indicated by a yellow filling in the pattern column.
    \end{enumber}
 
    The patterns column shows a list of all of the patterns that have been
@@ -217,23 +255,25 @@
    pattern layouts associated with it in the piano roll section.
 
    \index{patterns column!left click}
+   \index{song editor!muting}
    Left-clicking on the pattern name or the "M" button toggles the muting
-   status of the track.
+   (arming) status of the track.
 
    \index{patterns column!right click}
    Right-clicking on the pattern name or the "M" button brings up the same
    pattern editing menu as discussed in
    \sectionref{subsubsec:seq24_patterns_pattern_filled}.
    Recall that this context menu has the following entries:
-   Edit..., Cut, Copy, Song, and Midi Bus.
+   \textbf{Edit...}, \textbf{Cut}, \textbf{Copy},
+   \textbf{Song}, and \textbf{Midi Bus}.
 
 \subsubsection{Song Editor / Arrangement Panel / Piano Roll}
 \label{subsubsec:seq24_song_editor_arrangement_panel_roll}
 
    The "Piano Roll" section of the arrangement panel is where patterns or
    subsections are inserted, deleted, shrunk, lengthened, or moved.
-
-   Here are the items to note in the Piano Roll area:
+   Here are the items to note in the annotated Piano Roll area
+   shown in \figureref{fig:song_editor_window_full_items}:
 
    \begin{enumber}
       \item \textbf{Single}.
@@ -241,9 +281,9 @@
          It is small because it consists only of some MIDI Program Change
          messages meant to set the programs on a Yamaha PSS-790 keyboard.
       \item \textbf{Multiple}.
-         This items is the same pattern as in "Single", but dragged out for
+         This item is the same pattern as in "Single", but dragged out for
          multiple repetitions, simply to show how even the shortest patterns
-         can be easily replicated.
+         can be replicated easily.
       \item \textbf{Pattern Subsection}.
          \index{song editor!middle click}
          \index{pattern subsection}
@@ -260,18 +300,22 @@
          is especially useful for making holes in a pattern.  There may be
          other uses of a selection position that we have not yet discovered.
       \item \textbf{Selection}.
-         By clicking inside a pattern or a pattern subsection, it darkens to
-         denote that it is selected.
+         By clicking inside a pattern or a pattern subsection, it darkens
+         (gray) to denote that it is selected.
          A pattern subsection can be deleted by the
          \index{keys!delete}
          Delete key, copied by the
          \index{keys!ctrl-c}
+         \index{keys!copy}
          \texttt{Ctrl-C} key, and then inserted (one or more times) by the
          \index{keys!ctrl-v}
+         \index{keys!paste}
          \texttt{Ctrl-V} key.  When inserted, each insert goes immediately
          after the current item or the previous insertion.  The same can be
          done for whole patterns.
       \item \textbf{Section Length}.
+         \index{song editor!handle}
+         \index{song editor!section length}
          Looking closely at the diagram where the arrows point, small
          squares in the corner of the patterns can be seen.  By grabbing
          that square with a left-click, the square can be moved horizontally
@@ -279,34 +323,42 @@
          there is room to move in the desired direction.
          It doesn't matter if the item is selected or not.
       \item \textbf{Section Movement}.
+         \index{song editor!section movement}
          If, instead of grabbing the section length handle, one grabs inside
          the pattern or pattern subsection, that item can be moved
          horizontally, as long as their is room.  Or course, left-clicking
          inside the item will also cause it to show as selected.
       \item \textbf{Expansion}.
-         Originally, all the long patterns of this song were continuous.
+         \index{song editor!section expansion}
+         If, instead of grabbing the section length handle, one grabs inside
+         Originally, all the long patterns of this sample song were continuous.
          But, by setting the L and R markers, and using the \textbf{Expand}
-         button, we opened up some silent space in the song.
+         button, we opened up some silent space in the song, just to be able
+         to show it off.
    \end{enumber}
 
-   The \textsl{Sequencer24} help files refer to work in the Song Editor as the
-   "Performance Edit" or "Performance Mode".  Adding a pattern in this
+   The \textsl{Seq24} help files refer to work in the Song Editor as the
+   "Performance Editor" or "Performance Mode".  Adding a pattern in this
    window is a bit like adding a note in the Pattern Editor.
    One clicks, holds, and drags the mouse to insert a copy of the pattern
    associated with the row in which one is dragging.  The longer one drags,
    the more copies of the pattern that are inserted.
 
    \index{song editor!right click hold}
+   \index{song editor!draw}
 	Right-click on the arrangement panel (roll) to enter
    draw mode, and hold the button.
+   (TODO:  Mod4 fix soon!)
 
    \index{song editor!left click right hold}
-   Then left-click the mouse to insert one copy of the pattern.  The
-   inserted pattern will show up as a box with a tiny representation of the
-   notes visible inside.  (Some patterns, however, can be less than a
-   measure in length, resulting in a tiny box.)
+   \index{song editor!insert}
+   Then simultaneously left-click the mouse to insert one copy of the
+   pattern.  The inserted pattern will show up as a box with a tiny
+   representation of the notes visible inside.  (Some patterns, however, can
+   be less than a measure in length, resulting in a tiny box.)
 
    \index{song editor!right left hold drag}
+   \index{song editor!multiple insert}
    To keep adding more copies of the pattern, continue to hold both buttons
    and drag the mouse rightward.
 
@@ -320,9 +372,11 @@
    added.
 
    \index{song editor!left click}
-   When a pattern or a pattern subsection is left-clicked, it is marked as
-   dark gray.
+   \index{song editor!selection}
+   When a pattern or a pattern subsection is left-clicked in the piano
+   roll, it is marked with a dark gray filling.
    \index{song editor!right left hold drag}
+   \index{song editor!deletion}
    When a right-left-hold-drag action is done in this gray area, the result
    is to \textsl{delete} that pattern section or subsection.
    \index{keys!delete}
@@ -334,7 +388,7 @@
 
    The \textsl{measures ruler} is the ruled and numbered section at the top
    of the arrangement panel.  It provides a place to put the left and right
-   markers.  In the \textsl{Sequencer24} documentation, it is called the "bar
+   markers.  In the \textsl{Seq24} documentation, it is called the "bar
    indicator".
 
    \index{measures ruler!left-click}
