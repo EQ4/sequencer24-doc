@@ -8,13 +8,13 @@
 # \library     Home/Audio
 # \author      Chris Ahlstrom
 # \date        2015-04-04
-# \update      2015-07-19
+# \update      2015-09-07
 # \version     $Revision$
 # \license     $XPC_SUITE_GPL_LICENSE$
 #
 #     This script provides a way to make a pretty specific connection setup
 #     on Linux using JACK.  It replaces seq-session, using the new Jack
-#     script to control JACk and mpd.
+#     script to control JACK and mpd.
 #
 #     See the file seq-session-layout.odg (LibreOffice Draw file).
 #
@@ -27,16 +27,18 @@
 #     -  zita-j2a
 #     -  qjackctl
 #     -  yoshimi (software synthesizer)
-#     -  seq24 (MIDI loop application)
+#     -  seq24 (MIDI loop application) or sequencer24; change the SEQUENCER
+#        environment variable below to the one you want to use.
+#
+#  Local setup:
+#
+#     Change the variables below to match your setup.
 #
 #------------------------------------------------------------------------------
 
-#------------------------------------------------------------------------------
-# Run Jack and binfuncs
-#------------------------------------------------------------------------------
-
-# Why do this here?
-# . Jack
+SEQUENCER="sequencer24"
+SEQ24SONG="$HOME/Home/Audio/Seq24/click_4_4.midi"
+YOSHSTATE="$HOME/.config/yoshimi/yoshimi.state"
 
 #------------------------------------------------------------------------------
 # State variables
@@ -53,8 +55,6 @@ DoYoshimi="yes"
 DoYoshimiConnect="yes"
 DoMidiConnect="yes"
 DoSkipConnects="no"
-SEQ24SONG="$HOME/Home/Audio/Seq24/click_4_4.midi"
-YOSHSTATE="$HOME/.config/yoshimi/yoshimi.state"
 
 #------------------------------------------------------------------------------
 # USB Audio detection
@@ -144,7 +144,6 @@ fi
 
 if [ "$DoSetup" == "yes" ] ; then
 
-
    Jack on
 
 #------------------------------------------------------------------------------
@@ -178,7 +177,7 @@ if [ "$DoSetup" == "yes" ] ; then
 #------------------------------------------------------------------------------
 
    if [ "$DoZitaJ2a" == "yes" ] ; then
-      echo "Starting Zira JACK-to-ALSA bridge:"
+      echo "Starting Zita JACK-to-ALSA bridge:"
       echo "   zita-j2a -d $HWUSB"
       if [ "$HWUSB" == "" ] ; then
          echo "? Need to export HWUSB=hw:X, use 'aplay -l' to find X."
@@ -189,10 +188,10 @@ if [ "$DoSetup" == "yes" ] ; then
    fi
 
 #------------------------------------------------------------------------------
-# seq24
+# seq24 or sequencer24
 #------------------------------------------------------------------------------
 #
-#     With .seq24rc containing:
+#     With ~/.seq24rc (or ~/.config/sequencer24/sequencer24rc) containing:
 #
 #        [manual-alsa-ports]
 #        1
@@ -202,9 +201,9 @@ if [ "$DoSetup" == "yes" ] ; then
 #------------------------------------------------------------------------------
 
    if [ "$DoSeq24" == "yes" ] ; then
-      echo "Starting seq24 sequencer with song '$SEQ24SONG':"
-      echo "   seq24 --manual_alsa_ports ..."
-      seq24  --manual_alsa_ports "$SEQ24SONG" &
+      echo "Starting $SEQUENCER sequencer with song '$SEQ24SONG':"
+      echo "   $SEQUENCER --manual_alsa_ports ..."
+      $SEQUENCER  --manual_alsa_ports "$SEQ24SONG" &
       sleep 2
    fi
 
@@ -311,8 +310,8 @@ if [ "$DoTearDown" == "yes" ] ; then
    echo "Killing yoshimi..."
    killall yoshimi
    sleep 1
-   echo "Killing seq24..."
-   killall seq24
+   echo "Killing $SEQUENCER"
+   killall $SEQUENCER
    sleep 1
    echo "Killing a2jmidid..."
    killall a2jmidid
@@ -335,12 +334,12 @@ if [ "$DOHELP" == "yes" ] ; then
 
    cat << E_O_F
 
-Seq24-Session v 0.1 2015-07-19
+Seq24-Session v 0.2 2015-09-07
 
    Usage: Seq24-Session [ options | --help]
 
-This script helps you set up for doing MIDI work using JACK, Seq24,
-and the Yoshimi software synthesizer.
+This script helps you set up for doing MIDI work using JACK, Seq24 or
+Sequencer24, and the Yoshimi software synthesizer.
 
 Options:
 
@@ -400,5 +399,5 @@ E_O_F
 fi
 
 #------------------------------------------------------------------------------
-# vim: ft=sh
+# vim: ts=3 sw=3 wm=4 et ft=sh
 #------------------------------------------------------------------------------

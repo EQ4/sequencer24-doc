@@ -6,7 +6,7 @@
 % \library     Documents
 % \author      Chris Ahlstrom
 % \date        2015-08-31
-% \update      2015-09-02
+% \update      2015-09-07
 % \version     $Revision$
 % \license     $XPC_GPL_LICENSE$
 %
@@ -294,6 +294,10 @@
 \label{subsec:seq24_rc_file_mute_group}
      
    This section is delimited by the \texttt{[mute-group]} construct.
+   It controls 32 groups of mutes in the same way as defined for
+   \texttt{[midi-control]}. A group is set of sequences that can toggle their
+   playing state together.  Every group contains all 32 sequences in the
+   active screen set.
 
    \begin{verbatim}
       [mute-group]
@@ -305,11 +309,15 @@
       31 [0 0 0 0 0 0 0 0] [0 0 0 0 0 0 0 0] [0 0 0 0 0 0 0 0] [0 0 0 0 0 0 0 0]
    \end{verbatim}
 
-   The initial number, 1024 is...... WHAT?
+   The initial number, 1024 is probably the total count of 32 x 32 sequences.
 
    In this group are the definitions of the state of the 32 sequences
    in the playing screen set when a group is selected.
-   group [state of the first 8 sequences] [second 8] [third 8] [fourth 8]
+   Each set of brackets defines a group:
+   
+   \begin{verbatim}
+      [state of the first 8 sequences] [second 8] [third 8] [fourth 8]
+   \end{verbatim}
 
    After the list of sequences and their MIDI events, one can 
    set \textsl{Sequencer24} to handle MIDI events and change some more settings
@@ -320,7 +328,8 @@
 
    \index{[midi-clock]}
    The MIDI Clock fields will contain the clocking state from the last 
-   time \textsl{Sequencer24} was run.  Turn off the clock with a 0, or on with a 1.
+   time \textsl{Sequencer24} was run.  Turn off the clock with a 0, or on
+   with a 1.
    This section has 16 entries, one for each MIDI output buss that
    \textsl{Sequencer24} supports.
 
@@ -559,6 +568,10 @@
       [manual-alsa-ports]
       1
    \end{verbatim}
+
+   \index{jack!manual-alsa-ports}
+   Turning on the manual-alsa-ports option is necessary if one
+   wants to use \textsl{Sequencer24} with JACK.
 
    \index{[interaction-method]}
    This configuration item is the same as the 

@@ -127,7 +127,7 @@ Jack v. $MyJackVersion
    support for controlling other processes that are needed for audio work,
    or that interfere with JACK.  Steps:
 
-   -  Call binfuncs to set up convenience functions for the Jack script.
+   -  Calls binfuncs to set up convenience functions for the Jack script.
    -  Use systemd's 'systemctl' to stop 'mpd.socket' and 'mpd.service', to
       free up audio for JACK to use.  This requires running as root or
       setting yourself up in /etc/sudoers.d/systemctl-doers.

@@ -6,7 +6,7 @@
 % \library     Documents
 % \author      Chris Ahlstrom
 % \date        2015-08-31
-% \update      2015-09-05
+% \update      2015-09-06
 % \version     $Revision$
 % \license     $XPC_GPL_LICENSE$
 %
@@ -220,6 +220,10 @@
 
    \itempar{Off}{midi clock!off}
    This setting disables the MIDI clock for the given output buss.
+   
+   For feeding \textsl{Yoshimi} with MIDI data, we found that this
+   setting is the one that must be made in order for \textsl{Yoshimi} to
+   produce a sound.
 
    \itempar{On (Pos)}{midi clock!on (pos)}
    The MIDI clock will be sent to this buss.
@@ -441,6 +445,10 @@
    which the driver interprets as left or right depending where the finger
    is when it is clicked.  There's no way to click the right and left
    buttons at the same time.  There's no way to make a middle-click action.
+
+   Note that this option will not interfere with the Mod4 key being set
+   in the \textbf{Keyboard} option tab, since the keys there mainly apply to
+   the Patterns Panel (main window).
 
    \index{todo:extend mouse support}
    \textbf{TODO:}
