@@ -207,5 +207,74 @@ I will try and document in more detail all I've done to set this up on a
 Windows Laptop (mainly for my benefit as I'm bound to forget) - and once
 I've done this I'll post here for all to use in future....
 
+--------------------------------------------------
 
+https://community.ardour.org/node/3165
+
+What I had to do is set seq24's options like this:
+
+Enable Jack Transport
+Enable Transport Master
+Enable Master Conditional
+Enable Son Mode
+
+Then hit connect after firing and setting up ardour the way you did above.
+
+Master Conditional will make it be Master only if no other JACK Transport
+application is running at the moment. For me that worked well, used to be
+offbeat also.
+
+--------------------------------------------------
+
+https://help.ubuntu.com/community/HowToSeq24Introduction
+
+https://bugs.launchpad.net/seq24/+bug/392093
+
+Q:
+
+Now I start Hydrogen, the drum machine, and load a pattern in Hydrogen.
+But I don't connect in jack seq24 to hydrogen.
+
+And now something magical happens... if I hit "play" on seq24, hydrogen
+starts playing its own pattern!
+Isn't it weird?
+
+A:
+
+Two things could be causing the "bugs" you are seeing:
+
+* Seq24 is in "song" mode -> this causes seq24 to play the whole song (see
+  song editor) when play is clicked and not the individual patterns
+* Seq24 is configured to control jack transport -> all other
+  jack-transport-using programs also start to play when you click play in
+  seq24
+
+  Both of the aforementioned things can be configured from
+  File->Options->Jack Sync tab. To fix your problem, unselect "Jack
+  Transport", select "Live mode" and, last but not least, click the
+  Disconnect button.
+
+More:
+
+start seq24 in a console (gnome-terminal) or alt+f2 window with the
+following switch:
+
+seq24 --manual_alsa_ports
+
+JACK:
+
+JACKing the Applications Together
+
+Let's make the JACK audio and MIDI connections.
+
+Open up JACK Control's Connections window by clicking the Connect button.
+On the Audio tab, make sure that Hydrogen and ZynAddSubFX outpus are
+connected to ALSA PCM's input (was most likely done automatically).
+On the ALSA tab, connect Virtual Keyboard's output to seq24's input.
+Connect seq24's first output to ZynAddSubFX's input.
+Connect seq24's second ouput to Hydrogen's input.
+Now close the Connections window, as all of our connections are made and
+ready to go.
+
+(There is a whole lot more setup discussed at the Ubuntu link.
 
